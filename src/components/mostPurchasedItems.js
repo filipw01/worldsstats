@@ -54,7 +54,7 @@ const MostPurchasedItems = () => {
         {sortedItems.map((item, index) => {
           return (
             <li key={index}>
-              <img src={item.image}/>{item.id}: {item.count}
+              <img src={item.image} alt={`Item with id ${item.id}`}/>{item.id}: {item.count}
             </li>
           )
         })}

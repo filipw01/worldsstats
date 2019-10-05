@@ -8,9 +8,11 @@ import AverageGameTime from '../components/averageGameTime'
 import MostPicked from "../components/mostPicked"
 import MostBanned from "../components/mostBanned"
 import MostPurchasedItems from "../components/mostPurchasedItems"
+import FirstBloodPerGame from "../components/firstBloodPerGame"
 const IndexPage = () => {
   return (
     <Layout>
+      <FirstBloodPerGame/>
       <MostPurchasedItems/>
       <MostBanned/>
       <MostPicked/>
