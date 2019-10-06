@@ -49,7 +49,7 @@ const MostBanned = () => {
         {sortedBans.map((ban, index) => {
           return (
             <li key={index}>
-              {ban.name}: {ban.count}
+              <img src={ban.image} style={{height: "40px",verticalAlign:"middle"}} alt=""/> {ban.name}: {ban.count}
             </li>
           )
         })}

@@ -51,7 +51,7 @@ const MostPicked = () => {
         {sortedChampions.map((champion, index) => {
           return (
             <li key={index}>
-              {champion.name}: {champion.count}
+              <img src={champion.image} style={{height: "40px",verticalAlign:"middle"}} alt=""/> {champion.name}: {champion.count}
             </li>
           )
         })}
