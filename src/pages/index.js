@@ -10,6 +10,8 @@ import MostBanned from "../components/mostBanned"
 import MostPurchasedItems from "../components/mostPurchasedItems"
 import FirstBloodPerGame from "../components/firstBloodPerGame"
 import TeamMostPicked from "../components/teamMostPicked"
+import TeamObjectives from "../components/teamObjectives"
+import GoldDifferenceAt15 from "../components/goldDifferenceAt15"
 const IndexPage = ({ data }) => {
   const uniqueTeams = []
   for (const teamData of data.allDataJson.edges) {
@@ -21,6 +23,8 @@ const IndexPage = ({ data }) => {
   }
   return (
     <Layout>
+      <GoldDifferenceAt15 uniqueTeams={uniqueTeams}/>
+      <TeamObjectives uniqueTeams={uniqueTeams} />
       <TeamMostPicked uniqueTeams={uniqueTeams} />
       <FirstBloodPerGame />
       <MostPurchasedItems />
