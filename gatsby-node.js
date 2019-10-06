@@ -48,7 +48,7 @@ exports.createPages = ({ graphql, actions }) => {
           uniquePlayers.filter(player => player === playerData.name).length ===
           0
         if (isNewPlayer) {
-          uniquePlayers.push(playerData.name)
+          uniquePlayers.push({name:playerData.name,team:teamData.node.name})
         }
       }
     }
@@ -70,7 +70,7 @@ exports.createPages = ({ graphql, actions }) => {
     })
     uniquePlayers.forEach(uniquePlayer => {
       createPage({
-        path: `/${uniquePlayer.toLowerCase().replace(" ", "-")}/`,
+        path: `/${uniquePlayer.team.toLowerCase()}/${uniquePlayer.name.toLowerCase().replace(" ", "-")}/`,
         component: playerTemplate,
         context: {
           // Add optional context data to be inserted

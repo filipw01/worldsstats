@@ -17,10 +17,24 @@ const IndexPage = ({ data }) => {
       uniqueTeams.push(teamData.node.name)
     }
   }
+  const uniquePlayers = []
+  for (const teamData of data.allDataJson.edges) {
+    for (const playerData of teamData.node.players) {
+      const isNewPlayer =
+        uniquePlayers.filter(player => player.name === playerData.name).length === 0
+      if (isNewPlayer) {
+        uniquePlayers.push({ name: playerData.name, team: teamData.node.name })
+      }
+    }
+  }
   return (
     <Layout>
       {uniqueTeams.map(uniqueTeam => (
-        <Link key={uniqueTeam} style={{marginRight: "20px"}} to={`/${uniqueTeam.toLowerCase()}/`}>
+        <Link
+          key={uniqueTeam}
+          style={{ marginRight: "20px" }}
+          to={`/${uniqueTeam.toLowerCase()}/`}
+        >
           {uniqueTeam}
         </Link>
       ))}
@@ -41,6 +55,9 @@ export const query = graphql`
       edges {
         node {
           name
+          players{
+            name
+          }
         }
       }
     }
