@@ -1,7 +1,7 @@
 import { useStaticQuery, graphql } from "gatsby"
 import React from "react"
 
-const AverageGameTime = () => {
+const AverageGameTime = ({ uniqueTeams }) => {
   const data = useStaticQuery(
     graphql`
       query {
@@ -17,22 +17,20 @@ const AverageGameTime = () => {
     `
   )
   const teams = []
-  for (const teamData of data.allDataJson.edges) {
-    const isNewTeam =
-      teams.filter(team => team.name === teamData.node.name).length === 0
-    if (isNewTeam) {
-      teams.push({
-        name: teamData.node.name,
-        gameLength: [teamData.node.gameLength],
-      })
-    } else {
-      teams.forEach(team => {
-        if (team.name === teamData.node.name) {
-          team.gameLength.push(teamData.node.gameLength)
-        }
-      })
-    }
+  for (const uniqueTeam of uniqueTeams) {
+    teams.push({
+      name: uniqueTeam,
+      gameLength: []
+    })
   }
+  for (const teamData of data.allDataJson.edges) {
+    teams.forEach(team => {
+      if (team.name === teamData.node.name) {
+        team.gameLength.push(teamData.node.gameLength)
+      }
+    })
+  }
+
   return (
     <>
       <h1>Average game time</h1>
