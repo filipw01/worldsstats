@@ -7,11 +7,11 @@ import AverageGameTime from "../components/averageGameTime"
 import FirstBloodPerGame from "../components/firstBloodPerGame"
 import { Link } from "gatsby"
 
-export default ({ path, pathContext }) => {
+export default ({ path, pageContext }) => {
   const uniqueTeams = [path.slice(1, -1).toUpperCase()]
   return (
     <Layout>
-      {pathContext.players.map(player => (
+      {pageContext.players.map(player => (
         <Link
           key={player.name}
           style={{ marginRight: "20px" }}
