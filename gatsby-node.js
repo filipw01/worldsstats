@@ -18,7 +18,7 @@ exports.createPages = ({ graphql, actions }) => {
           edges {
             node {
               name
-              players{
+              players {
                 name
               }
             }
@@ -45,32 +45,33 @@ exports.createPages = ({ graphql, actions }) => {
     for (const teamData of result.data.allDataJson.edges) {
       for (const playerData of teamData.node.players) {
         const isNewPlayer =
-          uniquePlayers.filter(player => player === playerData.name).length ===
+          uniquePlayers.filter(player => player.name === playerData.name).length ===
           0
         if (isNewPlayer) {
-          uniquePlayers.push({name:playerData.name,team:teamData.node.name})
+          uniquePlayers.push({
+            name: playerData.name,
+            team: teamData.node.name,
+          })
         }
       }
     }
     uniqueTeams.forEach(uniqueTeam => {
+      const players = uniquePlayers.filter(
+        uniquePlayer => uniquePlayer.team === uniqueTeam
+      )
       createPage({
         path: `/${uniqueTeam.toLowerCase()}/`,
         component: teamTemplate,
         context: {
-          // Add optional context data to be inserted
-          // as props into the page component..
-          //
-          // The context data can also be used as
-          // arguments to the page GraphQL query.
-          //
-          // The page "path" is always available as a GraphQL
-          // argument.
+          players,
         },
       })
     })
     uniquePlayers.forEach(uniquePlayer => {
       createPage({
-        path: `/${uniquePlayer.team.toLowerCase()}/${uniquePlayer.name.toLowerCase().replace(" ", "-")}/`,
+        path: `/${uniquePlayer.team.toLowerCase()}/${uniquePlayer.name
+          .toLowerCase()
+          .replace(" ", "-")}/`,
         component: playerTemplate,
         context: {
           // Add optional context data to be inserted

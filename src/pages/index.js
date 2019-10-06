@@ -7,6 +7,8 @@ import SEO from "../components/seo"
 import MostPicked from "../components/mostPicked"
 import MostBanned from "../components/mostBanned"
 import MostPurchasedItems from "../components/mostPurchasedItems"
+import FirstBloodKing from "../components/firstBloodKing"
+import BestWinRatio from "../components/bestWinRatio"
 
 const IndexPage = ({ data }) => {
   const uniqueTeams = []
@@ -38,6 +40,8 @@ const IndexPage = ({ data }) => {
           {uniqueTeam}
         </Link>
       ))}
+      <BestWinRatio />
+      <FirstBloodKing uniquePlayers={uniquePlayers}/>
       <MostPurchasedItems />
       <MostBanned />
       <MostPicked />
