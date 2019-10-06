@@ -1,7 +1,8 @@
 import { useStaticQuery, graphql } from "gatsby"
 import React from "react"
+import { ListEntry, ListEntrySpan, TopList } from "./styledComponents"
 
-const MostBanned = () => {
+const MostBanned = ({ limit, gamesCount }) => {
   const data = useStaticQuery(
     graphql`
       query {
@@ -21,9 +22,7 @@ const MostBanned = () => {
   const bans = []
   for (const teamData of data.allDataJson.edges) {
     for (const teamBan of teamData.node.bans) {
-      const isNewBan =
-        bans.filter(ban => ban.name === teamBan.id)
-          .length === 0
+      const isNewBan = bans.filter(ban => ban.name === teamBan.id).length === 0
       if (isNewBan) {
         bans.push({
           name: teamBan.id,
@@ -39,21 +38,30 @@ const MostBanned = () => {
       }
     }
   }
-  const sortedBans = bans.sort((a, b) => {
-    return b.count - a.count
-  })
+  const sortedBans = bans
+    .sort((a, b) => {
+      return b.count - a.count
+    })
+    .slice(0, limit)
   return (
     <>
-      <h1>Most banned champions</h1>
-      <ul>
+      <h2>Most banned champions</h2>
+      <TopList>
         {sortedBans.map((ban, index) => {
           return (
-            <li key={index}>
-              <img src={ban.image} style={{height: "40px",verticalAlign:"middle"}} alt=""/> {ban.name}: {ban.count}
-            </li>
+            <ListEntry key={index}>
+              <img
+                src={ban.image}
+                style={{ height: "50px", verticalAlign: "middle" }}
+                alt=""
+              />
+              <ListEntrySpan>
+                {ban.name}: {Math.round((ban.count / gamesCount) * 100)}% of games
+              </ListEntrySpan>
+            </ListEntry>
           )
         })}
-      </ul>
+      </TopList>
     </>
   )
 }

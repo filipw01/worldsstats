@@ -2,7 +2,6 @@ import React from "react"
 import { Link } from "gatsby"
 
 import Layout from "../components/layout"
-import Image from "../components/image"
 import SEO from "../components/seo"
 import MostPicked from "../components/mostPicked"
 import MostBanned from "../components/mostBanned"
@@ -29,6 +28,7 @@ const IndexPage = ({ data }) => {
       }
     }
   }
+  const gamesCount = data.allDataJson.totalCount/2;
   return (
     <Layout>
       {uniqueTeams.map(uniqueTeam => (
@@ -40,15 +40,12 @@ const IndexPage = ({ data }) => {
           {uniqueTeam}
         </Link>
       ))}
-      <BestWinRatio />
-      <FirstBloodKing uniquePlayers={uniquePlayers}/>
-      <MostPurchasedItems />
-      <MostBanned />
-      <MostPicked />
+      <BestWinRatio limit={10} initialMinimumGamesPlayed={4}/>
+      <FirstBloodKing uniquePlayers={uniquePlayers} limit={5}/>
+      <MostPurchasedItems limit={10} gamesCount={gamesCount} />
+      <MostBanned limit={10} gamesCount={gamesCount}/>
+      <MostPicked limit={10} gamesCount={gamesCount}/>
       <SEO title="Home" />
-      <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-        <Image />
-      </div>
     </Layout>
   )
 }
@@ -56,6 +53,7 @@ const IndexPage = ({ data }) => {
 export const query = graphql`
   query {
     allDataJson {
+      totalCount
       edges {
         node {
           name

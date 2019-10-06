@@ -1,7 +1,8 @@
 import { useStaticQuery, graphql } from "gatsby"
 import React from "react"
+import { ListEntry, ListEntrySpan, TopList } from "./styledComponents"
 
-const MostPicked = () => {
+const MostPicked = ({ limit, gamesCount }) => {
   const data = useStaticQuery(
     graphql`
       query {
@@ -41,21 +42,30 @@ const MostPicked = () => {
       }
     }
   }
-  const sortedChampions = champions.sort((a, b) => {
-    return b.count - a.count
-  })
+  const sortedChampions = champions
+    .sort((a, b) => {
+      return b.count - a.count
+    })
+    .slice(0, limit)
   return (
     <>
-      <h1>Most picked champions</h1>
-      <ul>
+      <h2>Most picked champions</h2>
+      <TopList>
         {sortedChampions.map((champion, index) => {
           return (
-            <li key={index}>
-              <img src={champion.image} style={{height: "40px",verticalAlign:"middle"}} alt=""/> {champion.name}: {champion.count}
-            </li>
+            <ListEntry key={index}>
+              <img
+                src={champion.image}
+                style={{ height: "50px", verticalAlign: "middle" }}
+                alt=""
+              />{" "}
+              <ListEntrySpan>
+                {champion.name}: {Math.round((champion.count / gamesCount) * 100)}% of games
+              </ListEntrySpan>
+            </ListEntry>
           )
         })}
-      </ul>
+      </TopList>
     </>
   )
 }

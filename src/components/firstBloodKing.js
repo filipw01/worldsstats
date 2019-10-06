@@ -1,7 +1,8 @@
 import { useStaticQuery, graphql } from "gatsby"
 import React from "react"
+import { TopList, ListEntry, ListEntrySpan } from "./styledComponents"
 
-const FirstBloodKing = ({ uniquePlayers }) => {
+const FirstBloodKing = ({ uniquePlayers, limit }) => {
   const data = useStaticQuery(
     graphql`
       query {
@@ -46,29 +47,34 @@ const FirstBloodKing = ({ uniquePlayers }) => {
   for (const teamData of data.allDataJson.edges) {
     for (const playerData of teamData.node.players) {
       players.forEach(player => {
-      if (player.name === playerData.name) {
-        player.numberOfGames++
-      }
-    })
+        if (player.name === playerData.name) {
+          player.numberOfGames++
+        }
+      })
+    }
   }
-}
-  const sortedPlayers = players.sort(
-    (a, b) => b.firstBloods - a.firstBloods || a.numberOfGames - b.numberOfGames
-  )
+  const sortedPlayers = players
+    .sort(
+      (a, b) =>
+        b.firstBloods - a.firstBloods || a.numberOfGames - b.numberOfGames
+    )
+    .slice(0, limit)
   return (
     <>
-      <h1>First blood kings</h1>
-      <ul>
+      <h2>First blood kings</h2>
+      <TopList>
         {sortedPlayers.map((player, index) => {
           return (
-            <li key={index}>
-              {player.name}: {player.firstBloods} (
-              {Math.round((player.firstBloods / player.numberOfGames) * 100)}% of
-              games)
-            </li>
+            <ListEntry key={index}>
+              <ListEntrySpan>
+                {player.name}: {player.firstBloods} (
+                {Math.round((player.firstBloods / player.numberOfGames) * 100)}%
+                of games)
+              </ListEntrySpan>
+            </ListEntry>
           )
         })}
-      </ul>
+      </TopList>
     </>
   )
 }

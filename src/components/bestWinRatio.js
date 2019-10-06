@@ -1,7 +1,7 @@
 import { useStaticQuery, graphql } from "gatsby"
-import React from "react"
-
-const BestWinRatio = () => {
+import React, { useState } from "react"
+import {TopList, ListEntry, ListEntrySpan} from './styledComponents'
+const BestWinRatio = ({ limit, initialMinimumGamesPlayed }) => {
   const data = useStaticQuery(
     graphql`
       query {
@@ -21,6 +21,11 @@ const BestWinRatio = () => {
       }
     `
   )
+  const [minimumGamesPlayed, setMinimumGamesPlayed] = useState(
+    initialMinimumGamesPlayed
+  )
+  const setMinimumGamesPlayedAdapter = e =>
+    setMinimumGamesPlayed(e.target.value)
   const champions = []
   for (const teamData of data.allDataJson.edges) {
     for (const playerData of teamData.node.players) {
@@ -46,26 +51,41 @@ const BestWinRatio = () => {
       }
     }
   }
-  const sortedChampions = champions.sort((a, b) => {
-    return b.wins/b.count - a.wins/a.count || b.count - a.count
-  })
+  const sortedChampions = champions
+    .sort((a, b) => {
+      return b.wins / b.count - a.wins / a.count || b.count - a.count
+    })
+    .filter(champion => champion.count >= minimumGamesPlayed)
+    .slice(0, limit)
   return (
     <>
-      <h1>Highest win ratio champions</h1>
-      <ul>
+      <h2>Highest win ratio champions</h2>
+      <p>
+        Minimum games played{" "}
+        <input
+          type="number"
+          value={minimumGamesPlayed}
+          onChange={setMinimumGamesPlayedAdapter}
+        />
+      </p>
+      <TopList>
         {sortedChampions.map((champion, index) => {
           return (
-            <li key={index}>
+            <ListEntry key={index}>
               <img
                 src={champion.image}
-                style={{ height: "40px", verticalAlign: "middle" }}
+                style={{ height: "50px", verticalAlign: "middle" }}
                 alt=""
               />{" "}
-              {champion.name}: {Math.round(champion.wins/champion.count*100)}% wins ({champion.count} games)
-            </li>
+              <ListEntrySpan>
+                {champion.name}:{" "}
+                {Math.round((champion.wins / champion.count) * 100)}% wins (
+                {champion.count} games)
+              </ListEntrySpan>
+            </ListEntry>
           )
         })}
-      </ul>
+      </TopList>
     </>
   )
 }
