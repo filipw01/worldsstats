@@ -42,8 +42,6 @@ const GoldPerMinute = ({ uniquePlayers }) => {
   }
   const sortedPlayers = players.sort((a,b)=>b.totalGold/b.totalSeconds - a.totalGold/a.totalSeconds)
   return (
-    <>
-      <h1>Gold per minute</h1>
       <ul>
         {sortedPlayers.map((player, index) => {
           return (
@@ -53,7 +51,6 @@ const GoldPerMinute = ({ uniquePlayers }) => {
           )
         })}
       </ul>
-    </>
   )
 }
 

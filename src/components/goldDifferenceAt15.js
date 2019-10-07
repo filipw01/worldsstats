@@ -1,7 +1,8 @@
 import { useStaticQuery, graphql } from "gatsby"
 import React from "react"
+import { Header2 } from "./styledComponents"
 
-const GoldDifferenceAt15 = ({ uniqueTeams }) => {
+const GoldDifferenceAt15 = ({ uniqueTeams, displayTeams }) => {
   const data = useStaticQuery(
     graphql`
       query {
@@ -26,21 +27,34 @@ const GoldDifferenceAt15 = ({ uniqueTeams }) => {
     teams.forEach(team => {
       if (team.name === teamData.name) {
         team.goldDifferenceAt15 += Number(teamData.goldDifferenceAt15)
-        team.gamesCount++;
+        team.gamesCount++
       }
     })
   }
-  const sortedTeams = teams.sort((a,b)=>b.goldDifferenceAt15/b.gamesCount-a.goldDifferenceAt15/a.gamesCount)
+  let place;
+  const sortedTeams = teams.sort(
+    (a, b) =>
+      b.goldDifferenceAt15 / b.gamesCount - a.goldDifferenceAt15 / a.gamesCount
+  ).filter((team, index) => {
+    if (displayTeams.includes(team.name)) {
+      place = index + 1
+      return true
+    }
+    return false
+  })
   return (
-    <>
-      <h1>Gold difference at 15</h1>
+    <section>
+      <Header2>Gold difference at 15</Header2>
       {sortedTeams.map((team, index) => (
         <div key={index}>
-          <p>{team.name}</p>
-          <p>{Math.round(team.goldDifferenceAt15/team.gamesCount)} gold</p>
+          <p>
+            {place}/{uniqueTeams.length} teams{" "}
+            {team.goldDifferenceAt15 > 0 ? "+" : ""}
+            {Math.round(team.goldDifferenceAt15 / team.gamesCount)} gold
+          </p>
         </div>
       ))}
-    </>
+    </section>
   )
 }
 

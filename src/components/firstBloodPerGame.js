@@ -2,7 +2,7 @@ import { useStaticQuery, graphql } from "gatsby"
 import React from "react"
 import { Header2 } from "./styledComponents"
 
-const FirstBloodPerGame = ({ uniqueTeams }) => {
+const FirstBloodPerGame = ({ uniqueTeams, displayTeams }) => {
   const data = useStaticQuery(
     graphql`
       query {
@@ -52,23 +52,27 @@ const FirstBloodPerGame = ({ uniqueTeams }) => {
       }
     })
   }
+  let place;
   const sortedTeams = teams.sort(
     (a, b) => b.firstBloods - a.firstBloods || a.numberOfGames - b.numberOfGames
-  )
+  ).filter((team, index)=>{
+    if(displayTeams.includes(team.name)){
+      place=index+1;
+      return true
+    }
+    return false
+  } )
+
   return (
     <section>
-      <Header2>First blood</Header2>
-      <ul>
-        {sortedTeams.map((team, index) => {
-          return (
-            <li key={index}>
-              {team.name}: {team.firstBloods} (
-              {Math.round((team.firstBloods / team.numberOfGames) * 100)}% of
-              games)
-            </li>
-          )
-        })}
-      </ul>
+      <Header2>First bloods</Header2>
+      {sortedTeams.map((team) => {
+        return (
+          <p>
+            {place}/{uniqueTeams.length} teams {Math.round((team.firstBloods / team.numberOfGames) * 100)}% (total {team.numberOfGames} games) 
+          </p>
+        )
+      })}
     </section>
   )
 }

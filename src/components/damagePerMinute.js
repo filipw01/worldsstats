@@ -42,18 +42,15 @@ const DamagePerMinute = ({ uniquePlayers }) => {
   }
   const sortedPlayers = players.sort((a,b)=>b.totalDamage/b.totalSeconds - a.totalDamage/a.totalSeconds)
   return (
-    <>
-      <h1>Damage per minute</h1>
       <ul>
         {sortedPlayers.map((player, index) => {
           return (
             <li key={index}>
-              {player.name} {Math.round((player.totalDamage / player.totalSeconds) * 60)} dmg/minute
+              {Math.round((player.totalDamage / player.totalSeconds) * 60)} dmg/minute
             </li>
           )
         })}
       </ul>
-    </>
   )
 }
 

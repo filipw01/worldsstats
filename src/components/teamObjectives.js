@@ -1,5 +1,6 @@
 import { useStaticQuery, graphql } from "gatsby"
 import React from "react"
+import { Header2 } from "./styledComponents"
 
 const TeamObjectives = ({ uniqueTeams }) => {
   const data = useStaticQuery(
@@ -38,24 +39,39 @@ const TeamObjectives = ({ uniqueTeams }) => {
         team.heralds += Number(teamData.herald)
         team.dragons += Number(teamData.dragons)
         team.barons += Number(teamData.barons)
-        team.gamesCount++;
+        team.gamesCount++
       }
     })
   }
   return (
-    <>
-      <h1>Neutral objectives</h1>
+    <section>
+      <Header2>Neutral objectives</Header2>
       {teams.map((team, index) => (
         <div key={index}>
-          <p>{team.name}</p>
-          <p>Towers {team.towers} ({Math.round(team.towers/team.gamesCount*100)/100} per game)</p>
-          <p>Inhibitors {team.inhibitors} ({Math.round(team.inhibitors/team.gamesCount*100)/100} per game)</p>
-          <p>Heralds {team.heralds} ({Math.round(team.heralds/team.gamesCount*100)/100} per game)</p>
-          <p>Dragons {team.dragons} ({Math.round(team.dragons/team.gamesCount*100)/100} per game)</p>
-          <p>Barons {team.barons} ({Math.round(team.barons/team.gamesCount*100)/100} per game)</p>
+          <p>
+            Towers {Math.round((team.towers / team.gamesCount) * 100) / 100} per
+            game
+          </p>
+          <p>
+            Inhibitors{" "}
+            {Math.round((team.inhibitors / team.gamesCount) * 100) / 100} per
+            game
+          </p>
+          <p>
+            Heralds {Math.round((team.heralds / team.gamesCount) * 100) / 100}{" "}
+            per game
+          </p>
+          <p>
+            Dragons {Math.round((team.dragons / team.gamesCount) * 100) / 100}{" "}
+            per game
+          </p>
+          <p>
+            Barons {Math.round((team.barons / team.gamesCount) * 100) / 100} per
+            game
+          </p>
         </div>
       ))}
-    </>
+    </section>
   )
 }
 

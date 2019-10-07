@@ -42,18 +42,15 @@ const CreepsPerMinute = ({ uniquePlayers }) => {
   }
   const sortedPlayers = players.sort((a,b)=>b.totalCreeps/b.totalSeconds - a.totalCreeps/a.totalSeconds)
   return (
-    <>
-      <h1>Creeps per minute</h1>
       <ul>
         {sortedPlayers.map((player, index) => {
           return (
             <li key={index}>
-              {player.name} {Math.round((player.totalCreeps / player.totalSeconds) * 6000)/100} cs/minute
+              {Math.round((player.totalCreeps / player.totalSeconds) * 6000)/100} cs/minute
             </li>
           )
         })}
       </ul>
-    </>
   )
 }
 

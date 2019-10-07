@@ -5,11 +5,33 @@ import TeamObjectives from "../components/teamObjectives"
 import GoldDifferenceAt15 from "../components/goldDifferenceAt15"
 import AverageGameTime from "../components/averageGameTime"
 import FirstBloodPerGame from "../components/firstBloodPerGame"
-import { Link } from "gatsby"
+import { Link, useStaticQuery } from "gatsby"
 
 export default ({ path, pageContext }) => {
-  console.log(pageContext)
-  const team = pageContext.team;
+  const data = useStaticQuery(graphql`
+    query {
+      allDataJson {
+        totalCount
+        edges {
+          node {
+            name
+            players {
+              name
+            }
+          }
+        }
+      }
+    }
+  `)
+  const team = pageContext.team
+  const uniqueTeams = []
+  for (const teamData of data.allDataJson.edges) {
+    const isNewTeam =
+      uniqueTeams.filter(team => team === teamData.node.name).length === 0
+    if (isNewTeam) {
+      uniqueTeams.push(teamData.node.name)
+    }
+  }
   return (
     <Layout>
       {pageContext.players.map(player => (
@@ -21,11 +43,11 @@ export default ({ path, pageContext }) => {
           {player.name}
         </Link>
       ))}
-      <FirstBloodPerGame uniqueTeams={[team]}/>
-      <AverageGameTime uniqueTeams={[team]} />
-      <TeamMostPicked team={team} limit={3}/>
+      <FirstBloodPerGame uniqueTeams={uniqueTeams} displayTeams={[team]} />
+      <AverageGameTime uniqueTeams={uniqueTeams} displayTeams={[team]} />
+      <TeamMostPicked team={team} limit={3} />
       <TeamObjectives uniqueTeams={[team]} />
-      <GoldDifferenceAt15 uniqueTeams={[team]} />
+      <GoldDifferenceAt15 uniqueTeams={uniqueTeams} displayTeams={[team]}/>
     </Layout>
   )
 }

@@ -2,7 +2,6 @@ import styled from "styled-components"
 
 export const Header2 = styled.h2`
   font-size: 2.25rem;
-  margin-bottom: 0;
 `
 
 export const TopList = styled.ol`

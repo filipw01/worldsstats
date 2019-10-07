@@ -47,13 +47,10 @@ const KDA = ({ uniquePlayers }) => {
       (a.totalKills + a.totalAssists) / a.totalDeaths
   )
   return (
-    <>
-      <h1>KDA</h1>
       <ul>
         {sortedPlayers.map((player, index) => {
           return (
             <li key={index}>
-              {player.name}{" "}
               {Math.round(
                 ((player.totalKills + player.totalAssists) /
                   player.totalDeaths) *
@@ -64,7 +61,6 @@ const KDA = ({ uniquePlayers }) => {
           )
         })}
       </ul>
-    </>
   )
 }
 

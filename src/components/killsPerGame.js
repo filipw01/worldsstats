@@ -41,20 +41,16 @@ const KillsPerGame = ({ uniquePlayers }) => {
     (a, b) => b.totalKills / b.gamesCount - a.totalKills / a.gamesCount
   )
   return (
-    <>
-      <h1>Kills per game</h1>
       <ul>
         {sortedPlayers.map((player, index) => {
           return (
             <li key={index}>
-              {player.name}{" "}
               {Math.round((player.totalKills / player.gamesCount) * 100) / 100}{" "}
               kills/game
             </li>
           )
         })}
       </ul>
-    </>
   )
 }
 

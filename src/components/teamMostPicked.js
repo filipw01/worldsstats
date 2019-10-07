@@ -55,7 +55,7 @@ const TeamMostPicked = ({ team, limit }) => {
     <section>
       <Header2>Most picked champions</Header2>
       <TopList>
-        {sortedChampions.map((champion, index) => (
+        {sortedChampions.map((champion) => (
           <ListEntry key={champion.name}>
             <img
               src={champion.image}

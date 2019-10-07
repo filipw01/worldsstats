@@ -1,7 +1,7 @@
 import { useStaticQuery, graphql } from "gatsby"
 import React from "react"
 
-const AverageGameTime = ({ uniqueTeams }) => {
+const AverageGameTime = ({ uniqueTeams, displayTeams }) => {
   const data = useStaticQuery(
     graphql`
       query {
@@ -20,7 +20,7 @@ const AverageGameTime = ({ uniqueTeams }) => {
   for (const uniqueTeam of uniqueTeams) {
     teams.push({
       name: uniqueTeam,
-      gameLength: []
+      gameLength: [],
     })
   }
   for (const teamData of data.allDataJson.edges) {
@@ -31,27 +31,41 @@ const AverageGameTime = ({ uniqueTeams }) => {
     })
   }
 
+  const mappedTeams = teams.map(game => {
+    const totalGameLength = game.gameLength.reduce((acc, curr) => {
+      const gameLengthArray = curr.split(":")
+      const gameLengthInSeconds =
+        Number(gameLengthArray[0]) * 60 + Number(gameLengthArray[1])
+      return acc + gameLengthInSeconds
+    }, 0)
+    return {
+      averageGameLengthInSeconds: totalGameLength / game.gameLength.length,
+      name: game.name,
+    }
+  })
+  let place;
+  const sortedTeams = mappedTeams
+    .sort((a, b) => a.averageGameLengthInSeconds - b.averageGameLengthInSeconds)
+    .filter((team, index) => {
+      if (displayTeams.includes(team.name)) {
+        place = index + 1
+        return true
+      }
+      return false
+    })
+
   return (
     <>
       <h1>Average game time</h1>
-      <ul>
-        {teams.map((game, index) => {
-          const totalGameLength = game.gameLength.reduce((acc, curr) => {
-            const gameLengthArray = curr.split(":")
-            const gameLengthInSeconds =
-              Number(gameLengthArray[0]) * 60 + Number(gameLengthArray[1])
-            return acc + gameLengthInSeconds
-          }, 0)
-          const averageGameLengthInSeconds =
-            totalGameLength / game.gameLength.length
-          return (
-            <li key={index}>
-              {game.name} {Math.floor(averageGameLengthInSeconds / 60)}:
-              {Math.round(averageGameLengthInSeconds % 60)};
-            </li>
-          )
-        })}
-      </ul>
+      {sortedTeams.map(team => {
+        return (
+          <p>
+            {place}/{uniqueTeams.length} teams{" "}
+            {Math.floor(team.averageGameLengthInSeconds / 60)}:
+            {Math.round(team.averageGameLengthInSeconds % 60)}
+          </p>
+        )
+      })}
     </>
   )
 }
