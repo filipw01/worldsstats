@@ -29,7 +29,7 @@ const KillsPerGame = ({ uniquePlayers }) => {
   for (const teamData of data.allDataJson.edges) {
     for (const playerData of teamData.node.players) {
       players.forEach(player => {
-        if (player.name.toLowerCase() === playerData.name) {
+        if (player.name === playerData.name) {
           player.name = playerData.name
           player.totalKills += Number(playerData.kills)
           player.gamesCount++

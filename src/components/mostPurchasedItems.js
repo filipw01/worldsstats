@@ -8,6 +8,12 @@ const MostPurchasedItems = ({ limit, gamesCount }) => {
   const data = useStaticQuery(
     graphql`
       query {
+        allItemsJson {
+          nodes {
+            id
+            name
+          }
+        }
         allDataJson {
           edges {
             node {
@@ -121,11 +127,20 @@ const MostPurchasedItems = ({ limit, gamesCount }) => {
         (includeBoots || !bootsList.includes(item.id))
     )
     .slice(0, limit)
+    .map(item => {
+      const newItem = item
+      data.allItemsJson.nodes.forEach(itemData => {
+        if (itemData.id === item.id) {
+          newItem.name = itemData.name
+        }
+      })
+      return newItem
+    })
 
   return (
     <section>
       <Header2>Most purchased items</Header2>
-      <label>
+      <label style={{marginTop: "20px", display: "block"}}>
         Include boots{" "}
         <input
           type="checkbox"
@@ -134,11 +149,31 @@ const MostPurchasedItems = ({ limit, gamesCount }) => {
         />
       </label>
       <TopList>
-        {sortedItems.map((item, index) => {
+        {sortedItems.map(item => {
           return (
-            <ListEntry key={index}>
-              <img src={item.image} style={{ height: "50px", verticalAlign: "middle" }} alt={`Item with id ${item.id}`} />
-              <ListEntrySpan>{item.count} ({Math.round(item.count/gamesCount*100)/100} per game)</ListEntrySpan>
+            <ListEntry key={item.id}>
+              <img
+                src={item.image}
+                style={{ height: "50px", verticalAlign: "middle" }}
+                alt={`Item with id ${item.id}`}
+              />
+              <ListEntrySpan>
+                <div style={{ width: "100%" }}>
+                  <div style={{ fontSize: "18px" }}>{item.name}</div>
+                  <div style={{ fontSize: "14px", color: "#bbb" }}>
+                    {Math.round((item.count / gamesCount) * 100) / 100} per game
+                  </div>
+                </div>
+                <div
+                  style={{
+                    fontSize: "24px",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  {item.count}
+                </div>
+              </ListEntrySpan>
             </ListEntry>
           )
         })}

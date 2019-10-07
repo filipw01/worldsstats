@@ -1,5 +1,6 @@
 import { useStaticQuery, graphql } from "gatsby"
 import React from "react"
+import { Header2 } from "./styledComponents"
 
 const FirstBloodPerGame = ({ uniqueTeams }) => {
   const data = useStaticQuery(
@@ -55,8 +56,8 @@ const FirstBloodPerGame = ({ uniqueTeams }) => {
     (a, b) => b.firstBloods - a.firstBloods || a.numberOfGames - b.numberOfGames
   )
   return (
-    <>
-      <h1>First blood</h1>
+    <section>
+      <Header2>First blood</Header2>
       <ul>
         {sortedTeams.map((team, index) => {
           return (
@@ -68,7 +69,7 @@ const FirstBloodPerGame = ({ uniqueTeams }) => {
           )
         })}
       </ul>
-    </>
+    </section>
   )
 }
 

@@ -64,6 +64,7 @@ exports.createPages = ({ graphql, actions }) => {
         component: teamTemplate,
         context: {
           players,
+          team: uniqueTeam
         },
       })
     })

@@ -60,7 +60,21 @@ const MostPicked = ({ limit, gamesCount }) => {
                 alt=""
               />{" "}
               <ListEntrySpan>
-                {champion.name}: {Math.round((champion.count / gamesCount) * 100)}% of games
+                <div style={{ width: "100%" }}>
+                  <div style={{ fontSize: "18px" }}>{champion.name}</div>
+                  <div style={{ fontSize: "14px", color: "#bbb" }}>
+                    {champion.count} picks
+                  </div>
+                </div>
+                <div
+                  style={{
+                    fontSize: "24px",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  {Math.round((champion.count / gamesCount) * 100)}%
+                </div>
               </ListEntrySpan>
             </ListEntry>
           )

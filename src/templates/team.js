@@ -8,23 +8,24 @@ import FirstBloodPerGame from "../components/firstBloodPerGame"
 import { Link } from "gatsby"
 
 export default ({ path, pageContext }) => {
-  const uniqueTeams = [path.slice(1, -1).toUpperCase()]
+  console.log(pageContext)
+  const team = pageContext.team;
   return (
     <Layout>
       {pageContext.players.map(player => (
         <Link
           key={player.name}
-          style={{ marginRight: "20px" }}
+          style={{ marginRight: "20px", color: "#bbb" }}
           to={`${path}${player.name.toLowerCase().replace(" ", "-")}/`}
         >
           {player.name}
         </Link>
       ))}
-      <FirstBloodPerGame uniqueTeams={uniqueTeams}/>
-      <AverageGameTime uniqueTeams={uniqueTeams} />
-      <TeamMostPicked uniqueTeams={uniqueTeams} />
-      <TeamObjectives uniqueTeams={uniqueTeams} />
-      <GoldDifferenceAt15 uniqueTeams={uniqueTeams} />
+      <FirstBloodPerGame uniqueTeams={[team]}/>
+      <AverageGameTime uniqueTeams={[team]} />
+      <TeamMostPicked team={team} limit={3}/>
+      <TeamObjectives uniqueTeams={[team]} />
+      <GoldDifferenceAt15 uniqueTeams={[team]} />
     </Layout>
   )
 }

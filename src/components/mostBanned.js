@@ -56,7 +56,21 @@ const MostBanned = ({ limit, gamesCount }) => {
                 alt=""
               />
               <ListEntrySpan>
-                {ban.name}: {Math.round((ban.count / gamesCount) * 100)}% of games
+                <div style={{ width: "100%" }}>
+                  <div style={{ fontSize: "18px" }}>{ban.name}</div>
+                  <div style={{ fontSize: "14px", color: "#bbb" }}>
+                    {ban.count} bans
+                  </div>
+                </div>
+                <div
+                  style={{
+                    fontSize: "24px",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  {Math.round((ban.count / gamesCount) * 100)}%
+                </div>
               </ListEntrySpan>
             </ListEntry>
           )

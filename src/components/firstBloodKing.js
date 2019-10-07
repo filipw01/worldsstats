@@ -1,4 +1,4 @@
-import { useStaticQuery, graphql } from "gatsby"
+import { useStaticQuery, graphql, Link } from "gatsby"
 import React from "react"
 import { TopList, ListEntry, ListEntrySpan, Header2 } from "./styledComponents"
 
@@ -28,6 +28,7 @@ const FirstBloodKing = ({ uniquePlayers, limit }) => {
   const players = []
   for (const uniquePlayer of uniquePlayers) {
     players.push({
+      team: uniquePlayer.team,
       name: uniquePlayer.name,
       firstBloods: 0,
       numberOfGames: 0,
@@ -67,9 +68,33 @@ const FirstBloodKing = ({ uniquePlayers, limit }) => {
           return (
             <ListEntry key={index}>
               <ListEntrySpan>
-                {player.name}: {player.firstBloods} (
-                {Math.round((player.firstBloods / player.numberOfGames) * 100)}%
-                of games)
+                <div style={{ width: "100%" }}>
+                  <Link
+                    to={`/${player.team.toLowerCase()}/${player.name
+                      .toLowerCase()
+                      .replace(" ", "-")}/`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <div style={{ fontSize: "18px", color: "#fff" }}>
+                      {player.team} {player.name}
+                    </div>
+                    <div style={{ fontSize: "14px", color: "#bbb" }}>
+                      {Math.round(
+                        (player.firstBloods / player.numberOfGames) * 100
+                      )}
+                      % of games
+                    </div>
+                  </Link>
+                </div>
+                <div
+                  style={{
+                    fontSize: "24px",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  {player.firstBloods}
+                </div>
               </ListEntrySpan>
             </ListEntry>
           )

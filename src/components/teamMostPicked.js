@@ -1,19 +1,18 @@
 import { useStaticQuery, graphql } from "gatsby"
 import React from "react"
+import { Header2, TopList, ListEntry, ListEntrySpan } from "./styledComponents"
 
-const TeamMostPicked = ({ uniqueTeams }) => {
+const TeamMostPicked = ({ team, limit }) => {
   const data = useStaticQuery(
     graphql`
       query {
         allDataJson {
-          edges {
-            node {
-              name
-              players {
-                champion {
-                  id
-                  image
-                }
+          nodes {
+            name
+            players {
+              champion {
+                id
+                image
               }
             }
           }
@@ -21,66 +20,66 @@ const TeamMostPicked = ({ uniqueTeams }) => {
       }
     `
   )
-  const teams = []
-  for (const uniqueTeam of uniqueTeams) {
-    teams.push({
-      name: uniqueTeam,
-    })
-    const champions = []
-    for (const teamData of data.allDataJson.edges) {
-      for (const playerData of teamData.node.players) {
-        const isNewChampion =
-          champions.filter(champion => champion.name === playerData.champion.id)
-            .length === 0
-        if (
-          teamData.node.name === uniqueTeam &&
-          isNewChampion
-        ) {
-          champions.push({
-            name: playerData.champion.id,
-            image: playerData.champion.image,
-            count: 1,
-          })
-        } else {
-          champions.forEach(champion => {
-            if (
-              champion.name === playerData.champion.id &&
-              teamData.node.name === uniqueTeam
-            ) {
-              champion.count++
-            }
-          })
-        }
+
+  const champions = []
+  for (const teamData of data.allDataJson.nodes) {
+    for (const playerData of teamData.players) {
+      const isNewChampion =
+        champions.filter(champion => champion.name === playerData.champion.id)
+          .length === 0
+      if (teamData.name === team && isNewChampion) {
+        champions.push({
+          name: playerData.champion.id,
+          image: playerData.champion.image,
+          count: 1,
+        })
+      } else {
+        champions.forEach(champion => {
+          if (
+            champion.name === playerData.champion.id &&
+            teamData.name === team
+          ) {
+            champion.count++
+          }
+        })
       }
     }
-    const sortedChampions = champions.sort((a, b) => {
+  }
+  const sortedChampions = champions
+    .sort((a, b) => {
       return b.count - a.count
     })
-    teams.forEach(team => {
-      if (team.name === uniqueTeam) {
-        team.champions = sortedChampions
-      }
-    })
-  }
+    .slice(0, limit)
 
   return (
-    <>
-      <h1>Most picked champions per team</h1>
-      <ul>
-        {teams.map((team, index) => (
-          <div key={index}>
-            <p>{team.name}</p>
-            <ul>
-              {team.champions.map((champion, index) => (
-                <li key={index}>
-                  <img src={champion.image} style={{height: "40px",verticalAlign:"middle"}} alt=""/> {champion.name}: {champion.count}
-                </li>
-              ))}
-            </ul>
-          </div>
+    <section>
+      <Header2>Most picked champions</Header2>
+      <TopList>
+        {sortedChampions.map((champion, index) => (
+          <ListEntry key={champion.name}>
+            <img
+              src={champion.image}
+              style={{ height: "40px", verticalAlign: "middle" }}
+              alt=""
+            />{" "}
+            <ListEntrySpan>
+              <div style={{ width: "100%" }}>
+                <div style={{ fontSize: "18px" }}>{champion.name}</div>
+              </div>
+              <div
+                style={{
+                  fontSize: "24px",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                {champion.count}
+              </div>
+            </ListEntrySpan>
+          </ListEntry>
         ))}
-      </ul>
-    </>
+      </TopList>
+    </section>
   )
 }
 

@@ -6,7 +6,7 @@ export const Header2 = styled.h2`
 `
 
 export const TopList = styled.ol`
-  margin: 1rem auto;
+  margin: 1rem 0;
   max-width: 400px;
   list-style: none;
 `
