@@ -7,12 +7,8 @@ import KillsPerGame from "../components/killsPerGame"
 import DeathsPerGame from "../components/deathsPerGame"
 import KDA from "../components/kda"
 
-export default ({ path }) => {
-  const [team, playerName] = path
-    .slice(1, -1)
-    .replace("-", " ")
-    .split("/")
-  const player = { name: playerName }
+export default ({ pageContext }) => {
+  const player = { name: pageContext.playerName }
   return (
     <Layout>
       <KDA uniquePlayers={[player]} />

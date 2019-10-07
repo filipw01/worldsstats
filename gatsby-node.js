@@ -74,6 +74,7 @@ exports.createPages = ({ graphql, actions }) => {
           .replace(" ", "-")}/`,
         component: playerTemplate,
         context: {
+          playerName: uniquePlayer.name
           // Add optional context data to be inserted
           // as props into the page component..
           //

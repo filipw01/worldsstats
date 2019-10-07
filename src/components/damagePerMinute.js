@@ -30,7 +30,7 @@ const DamagePerMinute = ({ uniquePlayers }) => {
   for (const teamData of data.allDataJson.edges) {
     for (const playerData of teamData.node.players) {
       players.forEach(player => {
-        if (player.name.toLowerCase() === playerData.name.toLowerCase()) {
+        if (player.name === playerData.name) {
           player.name = playerData.name;
           player.totalDamage += Number(playerData.damage)
           player.totalSeconds +=

@@ -32,8 +32,7 @@ const KDA = ({ uniquePlayers }) => {
   for (const teamData of data.allDataJson.edges) {
     for (const playerData of teamData.node.players) {
       players.forEach(player => {
-        if (player.name.toLowerCase() === playerData.name.toLowerCase()) {
-          player.name = playerData.name
+        if (player.name === playerData.name) {
           player.totalDeaths += Number(playerData.deaths)
           player.totalKills += Number(playerData.kills)
           player.totalAssists += Number(playerData.assists)
@@ -43,7 +42,9 @@ const KDA = ({ uniquePlayers }) => {
   }
 
   const sortedPlayers = players.sort(
-    (a, b) => ((b.totalKills + b.totalAssists) / b.totalDeaths) - ((a.totalKills + a.totalAssists) / a.totalDeaths)
+    (a, b) =>
+      (b.totalKills + b.totalAssists) / b.totalDeaths -
+      (a.totalKills + a.totalAssists) / a.totalDeaths
   )
   return (
     <>
@@ -53,7 +54,11 @@ const KDA = ({ uniquePlayers }) => {
           return (
             <li key={index}>
               {player.name}{" "}
-              {Math.round((player.totalKills + player.totalAssists) / player.totalDeaths * 100) / 100}{" "}
+              {Math.round(
+                ((player.totalKills + player.totalAssists) /
+                  player.totalDeaths) *
+                  100
+              ) / 100}{" "}
               KDA
             </li>
           )
