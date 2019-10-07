@@ -1,6 +1,6 @@
 import { useStaticQuery, graphql } from "gatsby"
 import React from "react"
-import { TopList, ListEntry, ListEntrySpan } from "./styledComponents"
+import { TopList, ListEntry, ListEntrySpan, Header2 } from "./styledComponents"
 
 const FirstBloodKing = ({ uniquePlayers, limit }) => {
   const data = useStaticQuery(
@@ -60,8 +60,8 @@ const FirstBloodKing = ({ uniquePlayers, limit }) => {
     )
     .slice(0, limit)
   return (
-    <>
-      <h2>First blood kings</h2>
+    <section>
+      <Header2>First blood kings</Header2>
       <TopList>
         {sortedPlayers.map((player, index) => {
           return (
@@ -75,7 +75,7 @@ const FirstBloodKing = ({ uniquePlayers, limit }) => {
           )
         })}
       </TopList>
-    </>
+    </section>
   )
 }
 

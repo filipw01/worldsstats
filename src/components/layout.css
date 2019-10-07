@@ -600,6 +600,9 @@ pre code {
   background: none;
   line-height: 1.42;
 }
+section{
+  padding: 2rem 0;
+}
 code:before,
 code:after,
 tt:before,

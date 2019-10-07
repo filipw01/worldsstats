@@ -1,16 +1,39 @@
 import styled from "styled-components"
 
-export const TopList = styled.ol`
-  margin: 3rem auto;
-  max-width: 400px;
-  background-color: #2800a5;
-`
-
-export const ListEntry = styled.li`
+export const Header2 = styled.h2`
+  font-size: 2.25rem;
   margin-bottom: 0;
 `
 
+export const TopList = styled.ol`
+  margin: 1rem auto;
+  max-width: 400px;
+  list-style: none;
+`
+
+export const ListEntry = styled.li`
+  display: flex;
+  align-items: center;
+  margin-bottom: 0;
+  padding: 18px;
+  position: relative;
+  &::after {
+    content: "";
+    height: 1px;
+    width: 100%;
+    background-color: #575757;
+    position: absolute;
+    top: 100%;
+    left: 0;
+  }
+  &:last-child::after {
+    display: none;
+  }
+`
+
 export const ListEntrySpan = styled.span`
+  display: flex;
+  width: 100%;
   margin-left: 10px;
   color: #fff;
 `

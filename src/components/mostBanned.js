@@ -1,6 +1,6 @@
 import { useStaticQuery, graphql } from "gatsby"
 import React from "react"
-import { ListEntry, ListEntrySpan, TopList } from "./styledComponents"
+import { ListEntry, ListEntrySpan, TopList, Header2 } from "./styledComponents"
 
 const MostBanned = ({ limit, gamesCount }) => {
   const data = useStaticQuery(
@@ -44,8 +44,8 @@ const MostBanned = ({ limit, gamesCount }) => {
     })
     .slice(0, limit)
   return (
-    <>
-      <h2>Most banned champions</h2>
+    <section>
+      <Header2>Most banned champions</Header2>
       <TopList>
         {sortedBans.map((ban, index) => {
           return (
@@ -62,7 +62,7 @@ const MostBanned = ({ limit, gamesCount }) => {
           )
         })}
       </TopList>
-    </>
+    </section>
   )
 }
 

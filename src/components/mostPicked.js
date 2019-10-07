@@ -1,6 +1,6 @@
 import { useStaticQuery, graphql } from "gatsby"
 import React from "react"
-import { ListEntry, ListEntrySpan, TopList } from "./styledComponents"
+import { ListEntry, ListEntrySpan, TopList, Header2 } from "./styledComponents"
 
 const MostPicked = ({ limit, gamesCount }) => {
   const data = useStaticQuery(
@@ -48,8 +48,8 @@ const MostPicked = ({ limit, gamesCount }) => {
     })
     .slice(0, limit)
   return (
-    <>
-      <h2>Most picked champions</h2>
+    <section>
+      <Header2>Most picked champions</Header2>
       <TopList>
         {sortedChampions.map((champion, index) => {
           return (
@@ -66,7 +66,7 @@ const MostPicked = ({ limit, gamesCount }) => {
           )
         })}
       </TopList>
-    </>
+    </section>
   )
 }
 

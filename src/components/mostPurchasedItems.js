@@ -1,6 +1,6 @@
 import { useStaticQuery, graphql } from "gatsby"
 import React, { useState } from "react"
-import { ListEntry, ListEntrySpan, TopList } from "./styledComponents"
+import { ListEntry, ListEntrySpan, TopList, Header2 } from "./styledComponents"
 
 const MostPurchasedItems = ({ limit, gamesCount }) => {
   const [includeBoots, setIncludeBoots] = useState(false)
@@ -123,8 +123,8 @@ const MostPurchasedItems = ({ limit, gamesCount }) => {
     .slice(0, limit)
 
   return (
-    <>
-      <h2>Most purchased items</h2>
+    <section>
+      <Header2>Most purchased items</Header2>
       <label>
         Include boots{" "}
         <input
@@ -143,7 +143,7 @@ const MostPurchasedItems = ({ limit, gamesCount }) => {
           )
         })}
       </TopList>
-    </>
+    </section>
   )
 }
 

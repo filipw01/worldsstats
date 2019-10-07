@@ -40,7 +40,7 @@ const IndexPage = ({ data }) => {
           {uniqueTeam}
         </Link>
       ))}
-      <BestWinRatio limit={10} initialMinimumGamesPlayed={4}/>
+      <BestWinRatio limit={5} initialMinimumGamesPlayed={4}/>
       <FirstBloodKing uniquePlayers={uniquePlayers} limit={5}/>
       <MostPurchasedItems limit={10} gamesCount={gamesCount} />
       <MostBanned limit={10} gamesCount={gamesCount}/>
