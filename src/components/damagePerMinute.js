@@ -7,15 +7,13 @@ const DamagePerMinute = ({ uniquePlayers, displayPlayers }) => {
     graphql`
       query {
         allDataJson {
-          edges {
-            node {
+            nodes {
               players {
                 name
                 damage
               }
               gameLength
             }
-          }
         }
       }
     `
@@ -28,15 +26,15 @@ const DamagePerMinute = ({ uniquePlayers, displayPlayers }) => {
       totalSeconds: 0,
     })
   }
-  for (const teamData of data.allDataJson.edges) {
-    for (const playerData of teamData.node.players) {
+  for (const teamData of data.allDataJson.nodes) {
+    for (const playerData of teamData.players) {
       players.forEach(player => {
         if (player.name === playerData.name) {
           player.name = playerData.name
           player.totalDamage += Number(playerData.damage)
           player.totalSeconds +=
-            Number(teamData.node.gameLength.split(":")[0]) * 60 +
-            Number(teamData.node.gameLength.split(":")[1])
+            Number(teamData.gameLength.split(":")[0]) * 60 +
+            Number(teamData.gameLength.split(":")[1])
         }
       })
     }

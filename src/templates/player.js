@@ -5,72 +5,52 @@ import CreepsPerMinute from "../components/creepsPerMinute"
 import GoldPerMinute from "../components/goldPerMinute"
 import KillsPerGame from "../components/killsPerGame"
 import DeathsPerGame from "../components/deathsPerGame"
+import EliminatedBadge from "../components/eliminatedBadge"
 import KDA from "../components/kda"
 import { Header2 } from "../components/styledComponents"
-import { useStaticQuery, Link } from "gatsby"
+import { Link } from "gatsby"
+import useData from "../hooks/useData"
 
 export default ({ pageContext }) => {
-  const data = useStaticQuery(graphql`
-    query {
-      allDataJson {
-        totalCount
-        edges {
-          node {
-            name
-            players {
-              name
-            }
-          }
-        }
-      }
-    }
-  `)
+  const { uniquePlayers, eliminatedTeams } = useData()
   const player = { name: pageContext.playerName, team: pageContext.teamName }
-  const uniquePlayers = []
-  for (const teamData of data.allDataJson.edges) {
-    for (const playerData of teamData.node.players) {
-      const isNewPlayer =
-        uniquePlayers.filter(player => player === playerData.name).length === 0
-      if (isNewPlayer) {
-        uniquePlayers.push(playerData.name)
-      }
-    }
-  }
+  const uniquePlayersNames = uniquePlayers.map(player => player.name)
   return (
     <Layout>
+      {eliminatedTeams.includes(player.team)?<EliminatedBadge/>:""}
       <Link
         style={{ marginRight: "20px", color: "#bbb" }}
         to={`/${player.team.toLowerCase()}/`}
       >
         {player.team}
       </Link>
-        <Header2>{player.name}</Header2>
-        <div className="layout">
-          <KDA
-            uniquePlayers={uniquePlayers}
-            displayPlayers={[pageContext.playerName]}
-          />
-          <DeathsPerGame
-            uniquePlayers={uniquePlayers}
-            displayPlayers={[pageContext.playerName]}
-          />
-          <KillsPerGame
-            uniquePlayers={uniquePlayers}
-            displayPlayers={[pageContext.playerName]}
-          />
-          <GoldPerMinute
-            uniquePlayers={uniquePlayers}
-            displayPlayers={[pageContext.playerName]}
-          />
-          <CreepsPerMinute
-            uniquePlayers={uniquePlayers}
-            displayPlayers={[pageContext.playerName]}
-          />
-          <DamagePerMinute
-            uniquePlayers={uniquePlayers}
-            displayPlayers={[pageContext.playerName]}
-          />
-        </div>
+      <Header2>{player.name}</Header2>
+      <div className="layout">
+        <KDA
+          uniquePlayers={uniquePlayersNames}
+          displayPlayers={[pageContext.playerName]}
+        />
+        <DeathsPerGame
+          uniquePlayers={uniquePlayersNames}
+          displayPlayers={[pageContext.playerName]}
+        />
+        <KillsPerGame
+          uniquePlayers={uniquePlayersNames}
+          displayPlayers={[pageContext.playerName]}
+        />
+        <GoldPerMinute
+          uniquePlayers={uniquePlayersNames}
+          displayPlayers={[pageContext.playerName]}
+        />
+        <CreepsPerMinute
+          uniquePlayers={uniquePlayersNames}
+          displayPlayers={[pageContext.playerName]}
+        />
+        <DamagePerMinute
+          uniquePlayers={uniquePlayersNames}
+          displayPlayers={[pageContext.playerName]}
+        />
+      </div>
     </Layout>
   )
 }

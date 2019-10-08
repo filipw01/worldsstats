@@ -6,14 +6,12 @@ const BestWinRatio = ({ limit, initialMinimumGamesPlayed }) => {
     graphql`
       query {
         allDataJson {
-          edges {
-            node {
-              win
-              players {
-                champion {
-                  id
-                  image
-                }
+          nodes {
+            win
+            players {
+              champion {
+                id
+                image
               }
             }
           }
@@ -24,12 +22,13 @@ const BestWinRatio = ({ limit, initialMinimumGamesPlayed }) => {
   const [minimumGamesPlayed, setMinimumGamesPlayed] = useState(
     initialMinimumGamesPlayed
   )
+  const [ascendingWinRatio, setAscendingWinRatio] = useState(false)
   const minimumGames = useRef(null)
   const setMinimumGamesPlayedAdapter = e =>
     setMinimumGamesPlayed(e.target.value)
   const champions = []
-  for (const teamData of data.allDataJson.edges) {
-    for (const playerData of teamData.node.players) {
+  for (const teamData of data.allDataJson.nodes) {
+    for (const playerData of teamData.players) {
       const isNewChampion =
         champions.filter(champion => champion.name === playerData.champion.id)
           .length === 0
@@ -38,13 +37,13 @@ const BestWinRatio = ({ limit, initialMinimumGamesPlayed }) => {
           name: playerData.champion.id,
           image: playerData.champion.image,
           count: 1,
-          wins: teamData.node.win ? 1 : 0,
+          wins: teamData.win ? 1 : 0,
         })
       } else {
         champions.forEach(champion => {
           if (champion.name === playerData.champion.id) {
             champion.count++
-            if (teamData.node.win) {
+            if (teamData.win) {
               champion.wins++
             }
           }
@@ -52,18 +51,37 @@ const BestWinRatio = ({ limit, initialMinimumGamesPlayed }) => {
       }
     }
   }
-  const sortedChampions = champions
-    .sort((a, b) => {
-      return b.wins / b.count - a.wins / a.count || b.count - a.count
-    })
+  let sortedChampions
+  if (ascendingWinRatio) {
+    sortedChampions = champions.sort(
+      (a, b) => a.wins / a.count - b.wins / b.count || a.count - b.count
+    )
+  } else {
+    sortedChampions = champions.sort(
+      (a, b) => b.wins / b.count - a.wins / a.count || b.count - a.count
+    )
+  }
+  const filteredChampions = sortedChampions
     .filter(champion => champion.count >= minimumGamesPlayed)
     .slice(0, limit)
-  const focusMinimumGames = () => {
-    minimumGames.current.focus()
-  }
+
   return (
     <section>
-      <Header2>Highest win ratio</Header2>
+      {ascendingWinRatio?<Header2>Lowest win ratio</Header2>:<Header2>Highest win ratio</Header2>}
+      <div>
+        <button
+          onClick={() => setAscendingWinRatio(!ascendingWinRatio)}
+          style={{
+            backgroundColor: "#0E0E0E",
+            color: "#fff",
+            padding: ".25rem 1rem",
+            fontSize: ".875rem",
+            marginBottom: "10px"
+          }}
+        >
+          REVERSE
+        </button>
+      </div>
       <label>
         Minimum games played{" "}
         <input
@@ -79,7 +97,7 @@ const BestWinRatio = ({ limit, initialMinimumGamesPlayed }) => {
           onChange={setMinimumGamesPlayedAdapter}
         />
         <button
-          onClick={focusMinimumGames}
+          onClick={() => minimumGames.current.focus()}
           style={{
             backgroundColor: "#0E0E0E",
             color: "#fff",
@@ -91,7 +109,7 @@ const BestWinRatio = ({ limit, initialMinimumGamesPlayed }) => {
         </button>
       </label>
       <TopList>
-        {sortedChampions.map((champion, index) => {
+        {filteredChampions.map((champion, index) => {
           return (
             <ListEntry key={index}>
               <img

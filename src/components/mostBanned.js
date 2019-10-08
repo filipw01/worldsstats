@@ -7,12 +7,10 @@ const MostBanned = ({ limit, gamesCount }) => {
     graphql`
       query {
         allDataJson {
-          edges {
-            node {
-              bans {
-                id
-                image
-              }
+          nodes {
+            bans {
+              id
+              image
             }
           }
         }
@@ -20,8 +18,8 @@ const MostBanned = ({ limit, gamesCount }) => {
     `
   )
   const bans = []
-  for (const teamData of data.allDataJson.edges) {
-    for (const teamBan of teamData.node.bans) {
+  for (const teamData of data.allDataJson.nodes) {
+    for (const teamBan of teamData.bans) {
       const isNewBan = bans.filter(ban => ban.name === teamBan.id).length === 0
       if (isNewBan) {
         bans.push({

@@ -604,9 +604,13 @@ pre code {
 section {
   width: 100%;
   padding: 1rem 0;
+  margin: 0 auto;
   max-width: 400px;
 }
 @media screen and (min-width: 900px) {
+  section{
+    margin: initial;
+  }
   .layout{
     display: grid;
     grid-template-columns: 50% 50%;

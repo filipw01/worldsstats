@@ -7,14 +7,12 @@ const CreepsPerMinute = ({ uniquePlayers, displayPlayers }) => {
     graphql`
       query {
         allDataJson {
-          edges {
-            node {
-              players {
-                name
-                creeps
-              }
-              gameLength
+          nodes {
+            players {
+              name
+              creeps
             }
+            gameLength
           }
         }
       }
@@ -28,15 +26,15 @@ const CreepsPerMinute = ({ uniquePlayers, displayPlayers }) => {
       totalSeconds: 0,
     })
   }
-  for (const teamData of data.allDataJson.edges) {
-    for (const playerData of teamData.node.players) {
+  for (const teamData of data.allDataJson.nodes) {
+    for (const playerData of teamData.players) {
       players.forEach(player => {
         if (player.name === playerData.name) {
           player.name = playerData.name
           player.totalCreeps += Number(playerData.creeps)
           player.totalSeconds +=
-            Number(teamData.node.gameLength.split(":")[0]) * 60 +
-            Number(teamData.node.gameLength.split(":")[1])
+            Number(teamData.gameLength.split(":")[0]) * 60 +
+            Number(teamData.gameLength.split(":")[1])
         }
       })
     }
@@ -64,32 +62,35 @@ const CreepsPerMinute = ({ uniquePlayers, displayPlayers }) => {
   }
   return (
     <section>
-    <Header3>Creeps</Header3>
-    <TopList>
-      {sortedPlayers.map((player, index) => {
-        return (
-          <ListEntry key={index}>
-            <DataEntrySpan
-              style={{
-                whiteSpace: "nowrap",
-                fontSize: "24px",
-              }}
-            >
-              <div style={{ width: "100%" }}>
-                {place}
-                {nth}
-                <div style={{ fontSize: "14px", color: "#bbb" }}>best</div>
-              </div>
-              <div style={{ textAlign: "right" }}>
-                {Math.round((player.totalCreeps / player.totalSeconds) * 6000) /
-                  100}
-                <div style={{ fontSize: "14px", color: "#bbb" }}>cs/minute</div>
-              </div>
-            </DataEntrySpan>
-          </ListEntry>
-        )
-      })}
-    </TopList>
+      <Header3>Creeps</Header3>
+      <TopList>
+        {sortedPlayers.map((player, index) => {
+          return (
+            <ListEntry key={index}>
+              <DataEntrySpan
+                style={{
+                  whiteSpace: "nowrap",
+                  fontSize: "24px",
+                }}
+              >
+                <div style={{ width: "100%" }}>
+                  {place}
+                  {nth}
+                  <div style={{ fontSize: "14px", color: "#bbb" }}>best</div>
+                </div>
+                <div style={{ textAlign: "right" }}>
+                  {Math.round(
+                    (player.totalCreeps / player.totalSeconds) * 6000
+                  ) / 100}
+                  <div style={{ fontSize: "14px", color: "#bbb" }}>
+                    cs/minute
+                  </div>
+                </div>
+              </DataEntrySpan>
+            </ListEntry>
+          )
+        })}
+      </TopList>
     </section>
   )
 }

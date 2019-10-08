@@ -7,13 +7,11 @@ const MostPicked = ({ limit, gamesCount }) => {
     graphql`
       query {
         allDataJson {
-          edges {
-            node {
-              players {
-                champion {
-                  id
-                  image
-                }
+          nodes {
+            players {
+              champion {
+                id
+                image
               }
             }
           }
@@ -22,8 +20,8 @@ const MostPicked = ({ limit, gamesCount }) => {
     `
   )
   const champions = []
-  for (const teamData of data.allDataJson.edges) {
-    for (const playerData of teamData.node.players) {
+  for (const teamData of data.allDataJson.nodes) {
+    for (const playerData of teamData.players) {
       const isNewChampion =
         champions.filter(champion => champion.name === playerData.champion.id)
           .length === 0

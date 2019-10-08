@@ -7,12 +7,10 @@ const AverageGameTime = ({ uniqueTeams, displayTeams }) => {
     graphql`
       query {
         allDataJson {
-          edges {
-            node {
+            nodes {
               name
               gameLength
             }
-          }
         }
       }
     `
@@ -24,10 +22,10 @@ const AverageGameTime = ({ uniqueTeams, displayTeams }) => {
       gameLength: [],
     })
   }
-  for (const teamData of data.allDataJson.edges) {
+  for (const teamData of data.allDataJson.nodes) {
     teams.forEach(team => {
-      if (team.name === teamData.node.name) {
-        team.gameLength.push(teamData.node.gameLength)
+      if (team.name === teamData.name) {
+        team.gameLength.push(teamData.gameLength)
       }
     })
   }

@@ -7,14 +7,12 @@ const KDA = ({ uniquePlayers, displayPlayers }) => {
     graphql`
       query {
         allDataJson {
-          edges {
-            node {
-              players {
-                name
-                kills
-                deaths
-                assists
-              }
+          nodes {
+            players {
+              name
+              kills
+              deaths
+              assists
             }
           }
         }
@@ -30,8 +28,8 @@ const KDA = ({ uniquePlayers, displayPlayers }) => {
       totalAssists: 0,
     })
   }
-  for (const teamData of data.allDataJson.edges) {
-    for (const playerData of teamData.node.players) {
+  for (const teamData of data.allDataJson.nodes) {
+    for (const playerData of teamData.players) {
       players.forEach(player => {
         if (player.name === playerData.name) {
           player.totalDeaths += Number(playerData.deaths)
@@ -67,35 +65,35 @@ const KDA = ({ uniquePlayers, displayPlayers }) => {
   }
   return (
     <section>
-    <Header3>KDA</Header3>
-    <TopList>
-      {sortedPlayers.map((player, index) => {
-        return (
-          <ListEntry key={index}>
-            <DataEntrySpan
-              style={{
-                whiteSpace: "nowrap",
-                fontSize: "24px",
-              }}
-            >
-              <div style={{ width: "100%" }}>
-                {place}
-                {nth}
-                <div style={{ fontSize: "14px", color: "#bbb" }}>best</div>
-              </div>
-              <div style={{textAlign:"right"}}>
-                {Math.round(
-                  ((player.totalKills + player.totalAssists) /
-                    player.totalDeaths) *
-                    100
-                ) / 100}
-                <div style={{ fontSize: "14px", color: "#bbb" }}>KDA</div>
-              </div>
-            </DataEntrySpan>
-          </ListEntry>
-        )
-      })}
-    </TopList>
+      <Header3>KDA</Header3>
+      <TopList>
+        {sortedPlayers.map((player, index) => {
+          return (
+            <ListEntry key={index}>
+              <DataEntrySpan
+                style={{
+                  whiteSpace: "nowrap",
+                  fontSize: "24px",
+                }}
+              >
+                <div style={{ width: "100%" }}>
+                  {place}
+                  {nth}
+                  <div style={{ fontSize: "14px", color: "#bbb" }}>best</div>
+                </div>
+                <div style={{ textAlign: "right" }}>
+                  {Math.round(
+                    ((player.totalKills + player.totalAssists) /
+                      player.totalDeaths) *
+                      100
+                  ) / 100}
+                  <div style={{ fontSize: "14px", color: "#bbb" }}>KDA</div>
+                </div>
+              </DataEntrySpan>
+            </ListEntry>
+          )
+        })}
+      </TopList>
     </section>
   )
 }

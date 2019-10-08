@@ -15,14 +15,12 @@ const MostPurchasedItems = ({ limit, gamesCount }) => {
           }
         }
         allDataJson {
-          edges {
-            node {
+            nodes {
               players {
                 items {
                   id
                   image
                 }
-              }
             }
           }
         }
@@ -30,8 +28,8 @@ const MostPurchasedItems = ({ limit, gamesCount }) => {
     `
   )
   const items = []
-  for (const teamData of data.allDataJson.edges) {
-    for (const playerData of teamData.node.players) {
+  for (const teamData of data.allDataJson.nodes) {
+    for (const playerData of teamData.players) {
       for (const itemData of playerData.items) {
         const isNewItem =
           items.filter(item => item.id === itemData.id).length === 0

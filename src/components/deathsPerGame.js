@@ -7,13 +7,11 @@ const DeathsPerGame = ({ uniquePlayers, displayPlayers }) => {
     graphql`
       query {
         allDataJson {
-          edges {
-            node {
+            nodes {
               players {
                 name
                 deaths
               }
-            }
           }
         }
       }
@@ -27,8 +25,8 @@ const DeathsPerGame = ({ uniquePlayers, displayPlayers }) => {
       gamesCount: 0,
     })
   }
-  for (const teamData of data.allDataJson.edges) {
-    for (const playerData of teamData.node.players) {
+  for (const teamData of data.allDataJson.nodes) {
+    for (const playerData of teamData.players) {
       players.forEach(player => {
         if (player.name === playerData.name) {
           player.totalDeaths += Number(playerData.deaths)

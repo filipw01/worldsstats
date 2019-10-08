@@ -12,18 +12,16 @@ const FirstBloodPerGame = ({ uniqueTeams, displayTeams }) => {
     graphql`
       query {
         allDataJson {
-          edges {
-            node {
-              players {
-                champion {
-                  id
-                }
-              }
-              firstBlood {
+          nodes {
+            players {
+              champion {
                 id
               }
-              name
             }
+            firstBlood {
+              id
+            }
+            name
           }
         }
       }
@@ -37,22 +35,22 @@ const FirstBloodPerGame = ({ uniqueTeams, displayTeams }) => {
       numberOfGames: 0,
     })
   }
-  for (const teamData of data.allDataJson.edges) {
+  for (const teamData of data.allDataJson.nodes) {
     const isAllyFirstBlood =
-      teamData.node.players.filter(
-        player => player.champion.id === teamData.node.firstBlood.id
+      teamData.players.filter(
+        player => player.champion.id === teamData.firstBlood.id
       ).length === 1
     if (isAllyFirstBlood) {
       teams.forEach(team => {
-        if (team.name === teamData.node.name) {
+        if (team.name === teamData.name) {
           team.firstBloods++
         }
       })
     }
   }
-  for (const teamData of data.allDataJson.edges) {
+  for (const teamData of data.allDataJson.nodes) {
     teams.forEach(team => {
-      if (team.name === teamData.node.name) {
+      if (team.name === teamData.name) {
         team.numberOfGames++
       }
     })
