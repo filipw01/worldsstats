@@ -66,7 +66,7 @@ const KDA = ({ uniquePlayers, displayPlayers }) => {
     nth = "rd"
   }
   return (
-    <>
+    <section>
     <Header3>KDA</Header3>
     <TopList>
       {sortedPlayers.map((player, index) => {
@@ -96,7 +96,7 @@ const KDA = ({ uniquePlayers, displayPlayers }) => {
         )
       })}
     </TopList>
-    </>
+    </section>
   )
 }
 

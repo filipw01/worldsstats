@@ -62,7 +62,7 @@ const GoldPerMinute = ({ displayPlayers, uniquePlayers }) => {
     nth = "rd"
   }
   return (
-    <>
+    <section>
     <Header3>Gold</Header3>
     <TopList>
       {sortedPlayers.map((player, index) => {
@@ -91,7 +91,7 @@ const GoldPerMinute = ({ displayPlayers, uniquePlayers }) => {
         )
       })}
     </TopList>
-    </>
+    </section>
   )
 }
 

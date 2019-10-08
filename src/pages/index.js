@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "gatsby"
+import { graphql } from "gatsby"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
@@ -32,20 +32,13 @@ const IndexPage = ({ data }) => {
   const gamesCount = data.allDataJson.totalCount / 2
   return (
     <Layout>
-      {uniqueTeams.map(uniqueTeam => (
-        <Link
-          key={uniqueTeam}
-          style={{ marginRight: "20px", color: "#bbb" }}
-          to={`/${uniqueTeam.toLowerCase()}/`}
-        >
-          {uniqueTeam}
-        </Link>
-      ))}
-      <BestWinRatio limit={5} initialMinimumGamesPlayed={4} />
-      <FirstBloodKing uniquePlayers={uniquePlayers} limit={5} />
-      <MostPurchasedItems limit={5} gamesCount={gamesCount} />
-      <MostBanned limit={5} gamesCount={gamesCount} />
-      <MostPicked limit={5} gamesCount={gamesCount} />
+      <div className="layout">
+        <BestWinRatio limit={5} initialMinimumGamesPlayed={4} />
+        <FirstBloodKing uniquePlayers={uniquePlayers} limit={5} />
+        <MostBanned limit={5} gamesCount={gamesCount} />
+        <MostPicked limit={5} gamesCount={gamesCount} />
+        <MostPurchasedItems limit={5} gamesCount={gamesCount} />
+      </div>
       <SEO title="Home" />
     </Layout>
   )

@@ -58,7 +58,7 @@ const KillsPerGame = ({ uniquePlayers, displayPlayers }) => {
     nth = "rd"
   }
   return (
-    <>
+    <section>
     <Header3>Kills</Header3>
     <TopList>
       {sortedPlayers.map((player, index) => {
@@ -87,7 +87,7 @@ const KillsPerGame = ({ uniquePlayers, displayPlayers }) => {
         )
       })}
     </TopList>
-    </>
+    </section>
   )
 }
 

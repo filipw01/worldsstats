@@ -600,8 +600,17 @@ pre code {
   background: none;
   line-height: 1.42;
 }
+
 section {
+  width: 100%;
   padding: 1rem 0;
+  max-width: 400px;
+}
+@media screen and (min-width: 900px) {
+  .layout{
+    display: grid;
+    grid-template-columns: 50% 50%;
+  }
 }
 code:before,
 code:after,

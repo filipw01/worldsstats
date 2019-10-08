@@ -63,7 +63,7 @@ const DamagePerMinute = ({ uniquePlayers, displayPlayers }) => {
     nth = "rd"
   }
   return (
-    <>
+    <section>
       <Header3>Damage</Header3>
       <TopList>
         {sortedPlayers.map((player, index) => {
@@ -91,7 +91,7 @@ const DamagePerMinute = ({ uniquePlayers, displayPlayers }) => {
           )
         })}
       </TopList>
-    </>
+    </section>
   )
 }
 

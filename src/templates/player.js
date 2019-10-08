@@ -44,33 +44,33 @@ export default ({ pageContext }) => {
       >
         {player.team}
       </Link>
-      <section>
         <Header2>{player.name}</Header2>
-        <KDA
-          uniquePlayers={uniquePlayers}
-          displayPlayers={[pageContext.playerName]}
-        />
-        <DeathsPerGame
-          uniquePlayers={uniquePlayers}
-          displayPlayers={[pageContext.playerName]}
-        />
-        <KillsPerGame
-          uniquePlayers={uniquePlayers}
-          displayPlayers={[pageContext.playerName]}
-        />
-        <GoldPerMinute
-          uniquePlayers={uniquePlayers}
-          displayPlayers={[pageContext.playerName]}
-        />
-        <CreepsPerMinute
-          uniquePlayers={uniquePlayers}
-          displayPlayers={[pageContext.playerName]}
-        />
-        <DamagePerMinute
-          uniquePlayers={uniquePlayers}
-          displayPlayers={[pageContext.playerName]}
-        />
-      </section>
+        <div className="layout">
+          <KDA
+            uniquePlayers={uniquePlayers}
+            displayPlayers={[pageContext.playerName]}
+          />
+          <DeathsPerGame
+            uniquePlayers={uniquePlayers}
+            displayPlayers={[pageContext.playerName]}
+          />
+          <KillsPerGame
+            uniquePlayers={uniquePlayers}
+            displayPlayers={[pageContext.playerName]}
+          />
+          <GoldPerMinute
+            uniquePlayers={uniquePlayers}
+            displayPlayers={[pageContext.playerName]}
+          />
+          <CreepsPerMinute
+            uniquePlayers={uniquePlayers}
+            displayPlayers={[pageContext.playerName]}
+          />
+          <DamagePerMinute
+            uniquePlayers={uniquePlayers}
+            displayPlayers={[pageContext.playerName]}
+          />
+        </div>
     </Layout>
   )
 }

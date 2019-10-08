@@ -63,7 +63,7 @@ const CreepsPerMinute = ({ uniquePlayers, displayPlayers }) => {
     nth = "rd"
   }
   return (
-    <>
+    <section>
     <Header3>Creeps</Header3>
     <TopList>
       {sortedPlayers.map((player, index) => {
@@ -90,7 +90,7 @@ const CreepsPerMinute = ({ uniquePlayers, displayPlayers }) => {
         )
       })}
     </TopList>
-    </>
+    </section>
   )
 }
 
