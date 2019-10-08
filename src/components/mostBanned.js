@@ -1,6 +1,6 @@
 import { useStaticQuery, graphql } from "gatsby"
 import React from "react"
-import { ListEntry, ListEntrySpan, TopList, Header2 } from "./styledComponents"
+import { ListEntry, DataEntrySpan, TopList, Header2 } from "./styledComponents"
 
 const MostBanned = ({ limit, gamesCount }) => {
   const data = useStaticQuery(
@@ -55,7 +55,7 @@ const MostBanned = ({ limit, gamesCount }) => {
                 style={{ height: "50px", verticalAlign: "middle" }}
                 alt=""
               />
-              <ListEntrySpan>
+              <DataEntrySpan>
                 <div style={{ width: "100%" }}>
                   <div style={{ fontSize: "18px" }}>{ban.name}</div>
                   <div style={{ fontSize: "14px", color: "#bbb" }}>
@@ -71,7 +71,7 @@ const MostBanned = ({ limit, gamesCount }) => {
                 >
                   {Math.round((ban.count / gamesCount) * 100)}%
                 </div>
-              </ListEntrySpan>
+              </DataEntrySpan>
             </ListEntry>
           )
         })}

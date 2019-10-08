@@ -1,5 +1,6 @@
 import { useStaticQuery, graphql } from "gatsby"
 import React from "react"
+import { DataEntry, DataContainer, DataEntrySpan, Header2 } from "./styledComponents"
 
 const AverageGameTime = ({ uniqueTeams, displayTeams }) => {
   const data = useStaticQuery(
@@ -43,7 +44,7 @@ const AverageGameTime = ({ uniqueTeams, displayTeams }) => {
       name: game.name,
     }
   })
-  let place;
+  let place
   const sortedTeams = mappedTeams
     .sort((a, b) => a.averageGameLengthInSeconds - b.averageGameLengthInSeconds)
     .filter((team, index) => {
@@ -53,20 +54,38 @@ const AverageGameTime = ({ uniqueTeams, displayTeams }) => {
       }
       return false
     })
-
+  let nth = "th"
+  if (place%10 === 1) {
+    nth = "st"
+  } else if (place%10 === 2) {
+    nth = "nd"
+  } else if (place%10 === 3) {
+    nth = "rd"
+  }
   return (
-    <>
-      <h1>Average game time</h1>
-      {sortedTeams.map(team => {
+    <section>
+      <Header2>Average game time</Header2>
+      {sortedTeams.map((team, index) => {
         return (
-          <p>
-            {place}/{uniqueTeams.length} teams{" "}
-            {Math.floor(team.averageGameLengthInSeconds / 60)}:
-            {Math.round(team.averageGameLengthInSeconds % 60)}
-          </p>
+          <DataContainer key={index}>
+            <DataEntry>
+              <DataEntrySpan style={{ fontSize: "24px" }}>
+                <div style={{ width: "100%" }}>
+                  {place}
+                  {nth} <div style={{ fontSize: "14px", color: "#bbb" }}>best</div>
+                </div>
+                <div style={{ whiteSpace: "nowrap" }}>
+                  <div>
+                    {Math.floor(team.averageGameLengthInSeconds / 60)}:
+                    {Math.round(team.averageGameLengthInSeconds % 60)}
+                  </div>
+                </div>
+              </DataEntrySpan>
+            </DataEntry>
+          </DataContainer>
         )
       })}
-    </>
+    </section>
   )
 }
 

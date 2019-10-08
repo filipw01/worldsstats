@@ -1,6 +1,11 @@
 import { useStaticQuery, graphql } from "gatsby"
 import React from "react"
-import { Header2 } from "./styledComponents"
+import {
+  Header2,
+  DataEntry,
+  DataEntrySpan,
+  DataContainer,
+} from "./styledComponents"
 
 const FirstBloodPerGame = ({ uniqueTeams, displayTeams }) => {
   const data = useStaticQuery(
@@ -52,25 +57,51 @@ const FirstBloodPerGame = ({ uniqueTeams, displayTeams }) => {
       }
     })
   }
-  let place;
-  const sortedTeams = teams.sort(
-    (a, b) => b.firstBloods - a.firstBloods || a.numberOfGames - b.numberOfGames
-  ).filter((team, index)=>{
-    if(displayTeams.includes(team.name)){
-      place=index+1;
-      return true
-    }
-    return false
-  } )
-
+  let place
+  const sortedTeams = teams
+    .sort(
+      (a, b) =>
+        b.firstBloods - a.firstBloods || a.numberOfGames - b.numberOfGames
+    )
+    .filter((team, index) => {
+      if (displayTeams.includes(team.name)) {
+        place = index + 1
+        return true
+      }
+      return false
+    })
+  let nth = "th"
+  if (place === 1) {
+    nth = "st"
+  } else if (place === 2) {
+    nth = "nd"
+  } else if (place === 3) {
+    nth = "rd"
+  }
   return (
     <section>
       <Header2>First bloods</Header2>
-      {sortedTeams.map((team) => {
+      {sortedTeams.map((team, index) => {
         return (
-          <p>
-            {place}/{uniqueTeams.length} teams {Math.round((team.firstBloods / team.numberOfGames) * 100)}% (total {team.numberOfGames} games) 
-          </p>
+          <DataContainer key={index}>
+            <DataEntry>
+              <DataEntrySpan style={{ fontSize: "24px" }}>
+                <div style={{ width: "100%" }}>
+                  {place}
+                  {nth}{" "}
+                  <div style={{ fontSize: "14px", color: "#bbb" }}>best</div>
+                </div>
+                <div style={{ whiteSpace: "nowrap", textAlign: "center" }}>
+                  <div>
+                    {Math.round((team.firstBloods / team.numberOfGames) * 100)}%
+                  </div>
+                  <div style={{ fontSize: "14px", color: "#bbb" }}>
+                    {team.numberOfGames} games
+                  </div>
+                </div>
+              </DataEntrySpan>
+            </DataEntry>
+          </DataContainer>
         )
       })}
     </section>

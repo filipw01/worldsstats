@@ -1,6 +1,6 @@
 import { useStaticQuery, graphql } from "gatsby"
 import React, { useState } from "react"
-import { ListEntry, ListEntrySpan, TopList, Header2 } from "./styledComponents"
+import { ListEntry, DataEntrySpan, TopList, Header2 } from "./styledComponents"
 
 const MostPurchasedItems = ({ limit, gamesCount }) => {
   const [includeBoots, setIncludeBoots] = useState(false)
@@ -157,7 +157,7 @@ const MostPurchasedItems = ({ limit, gamesCount }) => {
                 style={{ height: "50px", verticalAlign: "middle" }}
                 alt={`Item with id ${item.id}`}
               />
-              <ListEntrySpan>
+              <DataEntrySpan>
                 <div style={{ width: "100%" }}>
                   <div style={{ fontSize: "18px" }}>{item.name}</div>
                   <div style={{ fontSize: "14px", color: "#bbb" }}>
@@ -173,7 +173,7 @@ const MostPurchasedItems = ({ limit, gamesCount }) => {
                 >
                   {item.count}
                 </div>
-              </ListEntrySpan>
+              </DataEntrySpan>
             </ListEntry>
           )
         })}

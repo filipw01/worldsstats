@@ -1,6 +1,11 @@
 import { useStaticQuery, graphql } from "gatsby"
 import React from "react"
-import { Header2 } from "./styledComponents"
+import {
+  Header2,
+  DataContainer,
+  DataEntry,
+  DataEntrySpan,
+} from "./styledComponents"
 
 const GoldDifferenceAt15 = ({ uniqueTeams, displayTeams }) => {
   const data = useStaticQuery(
@@ -31,28 +36,50 @@ const GoldDifferenceAt15 = ({ uniqueTeams, displayTeams }) => {
       }
     })
   }
-  let place;
-  const sortedTeams = teams.sort(
-    (a, b) =>
-      b.goldDifferenceAt15 / b.gamesCount - a.goldDifferenceAt15 / a.gamesCount
-  ).filter((team, index) => {
-    if (displayTeams.includes(team.name)) {
-      place = index + 1
-      return true
-    }
-    return false
-  })
+  let place
+  const sortedTeams = teams
+    .sort(
+      (a, b) =>
+        b.goldDifferenceAt15 / b.gamesCount -
+        a.goldDifferenceAt15 / a.gamesCount
+    )
+    .filter((team, index) => {
+      if (displayTeams.includes(team.name)) {
+        place = index + 1
+        return true
+      }
+      return false
+    })
+  let nth = "th"
+  if (place === 1) {
+    nth = "st"
+  } else if (place === 2) {
+    nth = "nd"
+  } else if (place === 3) {
+    nth = "rd"
+  }
   return (
     <section>
       <Header2>Gold difference at 15</Header2>
       {sortedTeams.map((team, index) => (
-        <div key={index}>
-          <p>
-            {place}/{uniqueTeams.length} teams{" "}
-            {team.goldDifferenceAt15 > 0 ? "+" : ""}
-            {Math.round(team.goldDifferenceAt15 / team.gamesCount)} gold
-          </p>
-        </div>
+        <DataContainer key={index}>
+          <DataEntry>
+            <DataEntrySpan style={{ fontSize: "24px" }}>
+              <div style={{ width: "100%" }}>
+                {place}
+                {nth} <div style={{ fontSize: "14px", color: "#bbb" }}>best</div>
+              </div>
+
+              <div style={{ whiteSpace: "nowrap", textAlign: "center" }}>
+                <div>
+                  {team.goldDifferenceAt15 > 0 ? "+" : ""}
+                  {Math.round(team.goldDifferenceAt15 / team.gamesCount)}
+                </div>
+                <div style={{ fontSize: "14px", color: "#bbb" }}>gold</div>
+              </div>
+            </DataEntrySpan>
+          </DataEntry>
+        </DataContainer>
       ))}
     </section>
   )

@@ -1,7 +1,8 @@
 import { useStaticQuery, graphql } from "gatsby"
 import React from "react"
+import { TopList, ListEntry, DataEntrySpan, Header3 } from "./styledComponents"
 
-const DamagePerMinute = ({ uniquePlayers }) => {
+const DamagePerMinute = ({ uniquePlayers, displayPlayers }) => {
   const data = useStaticQuery(
     graphql`
       query {
@@ -22,7 +23,7 @@ const DamagePerMinute = ({ uniquePlayers }) => {
   const players = []
   for (const uniquePlayer of uniquePlayers) {
     players.push({
-      name: uniquePlayer.name,
+      name: uniquePlayer,
       totalDamage: 0,
       totalSeconds: 0,
     })
@@ -31,7 +32,7 @@ const DamagePerMinute = ({ uniquePlayers }) => {
     for (const playerData of teamData.node.players) {
       players.forEach(player => {
         if (player.name === playerData.name) {
-          player.name = playerData.name;
+          player.name = playerData.name
           player.totalDamage += Number(playerData.damage)
           player.totalSeconds +=
             Number(teamData.node.gameLength.split(":")[0]) * 60 +
@@ -40,17 +41,57 @@ const DamagePerMinute = ({ uniquePlayers }) => {
       })
     }
   }
-  const sortedPlayers = players.sort((a,b)=>b.totalDamage/b.totalSeconds - a.totalDamage/a.totalSeconds)
+  let place
+  const sortedPlayers = players
+    .sort(
+      (a, b) => b.totalDamage / b.totalSeconds - a.totalDamage / a.totalSeconds
+    )
+    .filter((player, index) => {
+      if (displayPlayers.includes(player.name)) {
+        place = index + 1
+        return true
+      }
+      return false
+    })
+
+  let nth = "th"
+  if (place === 1) {
+    nth = "st"
+  } else if (place === 2) {
+    nth = "nd"
+  } else if (place === 3) {
+    nth = "rd"
+  }
   return (
-      <ul>
+    <>
+      <Header3>Damage</Header3>
+      <TopList>
         {sortedPlayers.map((player, index) => {
           return (
-            <li key={index}>
-              {Math.round((player.totalDamage / player.totalSeconds) * 60)} dmg/minute
-            </li>
+            <ListEntry key={index}>
+              <DataEntrySpan
+                style={{
+                  whiteSpace: "nowrap",
+                  fontSize: "24px",
+                }}
+              >
+                <div style={{ width: "100%" }}>
+                  {place}
+                  {nth}
+                  <div style={{ fontSize: "14px", color: "#bbb" }}>best</div>
+                </div>
+                <div style={{ textAlign: "right" }}>
+                  {Math.round((player.totalDamage / player.totalSeconds) * 60)}
+                  <div style={{ fontSize: "14px", color: "#bbb" }}>
+                    dmg/minute
+                  </div>
+                </div>
+              </DataEntrySpan>
+            </ListEntry>
           )
         })}
-      </ul>
+      </TopList>
+    </>
   )
 }
 

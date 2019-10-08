@@ -600,8 +600,8 @@ pre code {
   background: none;
   line-height: 1.42;
 }
-section{
-  padding: 2rem 0;
+section {
+  padding: 1rem 0;
 }
 code:before,
 code:after,
@@ -620,4 +620,7 @@ pre tt:after {
   html {
     font-size: 100%;
   }
+}
+a {
+  white-space: nowrap;
 }

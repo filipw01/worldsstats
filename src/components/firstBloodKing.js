@@ -1,6 +1,6 @@
 import { useStaticQuery, graphql, Link } from "gatsby"
 import React from "react"
-import { TopList, ListEntry, ListEntrySpan, Header2 } from "./styledComponents"
+import { TopList, ListEntry, DataEntrySpan, Header2 } from "./styledComponents"
 
 const FirstBloodKing = ({ uniquePlayers, limit }) => {
   const data = useStaticQuery(
@@ -67,7 +67,7 @@ const FirstBloodKing = ({ uniquePlayers, limit }) => {
         {sortedPlayers.map((player, index) => {
           return (
             <ListEntry key={index}>
-              <ListEntrySpan>
+              <DataEntrySpan>
                 <div style={{ width: "100%" }}>
                   <Link
                     to={`/${player.team.toLowerCase()}/${player.name
@@ -95,7 +95,7 @@ const FirstBloodKing = ({ uniquePlayers, limit }) => {
                 >
                   {player.firstBloods}
                 </div>
-              </ListEntrySpan>
+              </DataEntrySpan>
             </ListEntry>
           )
         })}

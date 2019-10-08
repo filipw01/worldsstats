@@ -1,6 +1,6 @@
 import { useStaticQuery, graphql } from "gatsby"
 import React, { useState, useRef } from "react"
-import { TopList, ListEntry, ListEntrySpan, Header2 } from "./styledComponents"
+import { TopList, ListEntry, DataEntrySpan, Header2 } from "./styledComponents"
 const BestWinRatio = ({ limit, initialMinimumGamesPlayed }) => {
   const data = useStaticQuery(
     graphql`
@@ -24,7 +24,7 @@ const BestWinRatio = ({ limit, initialMinimumGamesPlayed }) => {
   const [minimumGamesPlayed, setMinimumGamesPlayed] = useState(
     initialMinimumGamesPlayed
   )
-  const minimumGames = useRef(null);
+  const minimumGames = useRef(null)
   const setMinimumGamesPlayedAdapter = e =>
     setMinimumGamesPlayed(e.target.value)
   const champions = []
@@ -58,12 +58,38 @@ const BestWinRatio = ({ limit, initialMinimumGamesPlayed }) => {
     })
     .filter(champion => champion.count >= minimumGamesPlayed)
     .slice(0, limit)
-    const focusMinimumGames = ()=>{
-      minimumGames.current.focus();
-    }
+  const focusMinimumGames = () => {
+    minimumGames.current.focus()
+  }
   return (
     <section>
       <Header2>Highest win ratio</Header2>
+      <label>
+        Minimum games played{" "}
+        <input
+          ref={minimumGames}
+          style={{
+            backgroundColor: "transparent",
+            border: "none",
+            color: "#fff",
+            width: "30px",
+          }}
+          type="number"
+          value={minimumGamesPlayed}
+          onChange={setMinimumGamesPlayedAdapter}
+        />
+        <button
+          onClick={focusMinimumGames}
+          style={{
+            backgroundColor: "#0E0E0E",
+            color: "#fff",
+            padding: ".25rem 1rem",
+            fontSize: ".875rem",
+          }}
+        >
+          CHANGE
+        </button>
+      </label>
       <TopList>
         {sortedChampions.map((champion, index) => {
           return (
@@ -73,7 +99,7 @@ const BestWinRatio = ({ limit, initialMinimumGamesPlayed }) => {
                 style={{ height: "50px", verticalAlign: "middle" }}
                 alt=""
               />{" "}
-              <ListEntrySpan>
+              <DataEntrySpan>
                 <div style={{ width: "100%" }}>
                   <div style={{ fontSize: "18px" }}>{champion.name}</div>
                   <div style={{ fontSize: "14px", color: "#bbb" }}>
@@ -89,27 +115,11 @@ const BestWinRatio = ({ limit, initialMinimumGamesPlayed }) => {
                 >
                   {Math.round((champion.wins / champion.count) * 100)}%
                 </div>
-              </ListEntrySpan>
+              </DataEntrySpan>
             </ListEntry>
           )
         })}
       </TopList>
-      <label>
-        Minimum games played{" "}
-        <input
-        ref={minimumGames}
-          style={{
-            backgroundColor: "transparent",
-            border: "none",
-            color: "#fff",
-            width: "30px"
-          }}
-          type="number"
-          value={minimumGamesPlayed}
-          onChange={setMinimumGamesPlayedAdapter}
-        />
-        <button onClick={focusMinimumGames} style={{backgroundColor: "#0E0E0E", color: "#fff", padding: ".25rem 1rem", fontSize: ".875rem"}}>CHANGE</button>
-      </label>
     </section>
   )
 }

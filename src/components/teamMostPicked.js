@@ -1,6 +1,6 @@
 import { useStaticQuery, graphql } from "gatsby"
 import React from "react"
-import { Header2, TopList, ListEntry, ListEntrySpan } from "./styledComponents"
+import { Header2, TopList, ListEntry, DataEntrySpan } from "./styledComponents"
 
 const TeamMostPicked = ({ team, limit }) => {
   const data = useStaticQuery(
@@ -62,7 +62,7 @@ const TeamMostPicked = ({ team, limit }) => {
               style={{ height: "40px", verticalAlign: "middle" }}
               alt=""
             />{" "}
-            <ListEntrySpan>
+            <DataEntrySpan>
               <div style={{ width: "100%" }}>
                 <div style={{ fontSize: "18px" }}>{champion.name}</div>
               </div>
@@ -75,7 +75,7 @@ const TeamMostPicked = ({ team, limit }) => {
               >
                 {champion.count}
               </div>
-            </ListEntrySpan>
+            </DataEntrySpan>
           </ListEntry>
         ))}
       </TopList>
