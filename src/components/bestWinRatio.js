@@ -1,6 +1,12 @@
 import { useStaticQuery, graphql } from "gatsby"
 import React, { useState, useRef } from "react"
-import { TopList, ListEntry, DataEntrySpan, Header2 } from "./styledComponents"
+import {
+  TopList,
+  ListEntry,
+  DataEntrySpan,
+  Header2,
+  BaseButton,
+} from "./styledComponents"
 const BestWinRatio = ({ limit, initialMinimumGamesPlayed }) => {
   const data = useStaticQuery(
     graphql`
@@ -73,7 +79,7 @@ const BestWinRatio = ({ limit, initialMinimumGamesPlayed }) => {
         <Header2>Highest win ratio</Header2>
       )}
       <label>
-        Minimum games played{" "}
+        Minimum games played:{" "}
         <input
           ref={minimumGames}
           min="1"
@@ -81,37 +87,24 @@ const BestWinRatio = ({ limit, initialMinimumGamesPlayed }) => {
             backgroundColor: "transparent",
             border: "none",
             color: "#fff",
-            width: "30px",
+            width: "40px",
+            fontSize: "24px",
+            verticalAlign: "baseline",
+            textAlign: "right",
+            marginRight: "10px",
           }}
           type="number"
           value={minimumGamesPlayed}
           onChange={setMinimumGamesPlayedAdapter}
         />
-        <button
-          onClick={() => minimumGames.current.focus()}
-          style={{
-            backgroundColor: "#0E0E0E",
-            color: "#fff",
-            padding: ".25rem 1rem",
-            fontSize: ".875rem",
-          }}
-        >
+        <BaseButton onClick={() => minimumGames.current.select()}>
           CHANGE
-        </button>
+        </BaseButton>
       </label>
       <div>
-        <button
-          onClick={() => setAscendingWinRatio(!ascendingWinRatio)}
-          style={{
-            backgroundColor: "#0E0E0E",
-            color: "#fff",
-            padding: ".25rem 1rem",
-            fontSize: ".875rem",
-            marginTop: "10px",
-          }}
-        >
+        <BaseButton onClick={() => setAscendingWinRatio(!ascendingWinRatio)}>
           {ascendingWinRatio ? "SHOW HIGHEST" : "SHOW LOWEST"}
-        </button>
+        </BaseButton>
       </div>
       <TopList>
         {filteredChampions.map((champion, index) => {

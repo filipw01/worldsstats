@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 export const Header2 = styled.h2`
-  font-size: 2.25rem;
+  font-size: 2rem;
 `
 export const Header3 = styled.h2`
   font-size: 1.5rem;
@@ -13,6 +13,23 @@ export const TopList = styled.ol`
   width: 100%;
   max-width: 400px;
   list-style: none;
+`
+
+export const BaseButton = styled.button`
+  background-color: #0e0e0e;
+  color: #fff;
+  padding: 0.5rem 1rem 0.35rem;
+  font-size: 0.875rem;
+  font-weight: bold;
+  margin-top: 10px;
+  border: none;
+  cursor: pointer;
+  border-bottom: 3px solid #f4de33;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  &:hover {
+    background-color: #f4de33;
+    color: #000;
+  }
 `
 
 export const DataContainer = styled.div`

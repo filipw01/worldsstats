@@ -1,24 +1,27 @@
 import { useStaticQuery, graphql } from "gatsby"
-import React from "react"
+import React, { useContext } from "react"
 import { TopList, ListEntry, DataEntrySpan, Header3 } from "./styledComponents"
+import useData, { SettingsContext } from "../hooks/useData"
 
-const DeathsPerGame = ({ uniquePlayers, displayPlayers }) => {
+const DeathsPerGame = ({ displayPlayers }) => {
   const data = useStaticQuery(
     graphql`
       query {
         allDataJson {
-            nodes {
-              players {
-                name
-                deaths
-              }
+          nodes {
+            players {
+              name
+              deaths
+            }
           }
         }
       }
     `
   )
+  const { uniquePlayers } = useData(useContext(SettingsContext))
+  const uniquePlayersNames = uniquePlayers.map(player => player.name)
   const players = []
-  for (const uniquePlayer of uniquePlayers) {
+  for (const uniquePlayer of uniquePlayersNames) {
     players.push({
       name: uniquePlayer,
       totalDeaths: 0,
@@ -56,34 +59,34 @@ const DeathsPerGame = ({ uniquePlayers, displayPlayers }) => {
   }
   return (
     <section>
-    <Header3>Deaths</Header3>
-    <TopList>
-      {sortedPlayers.map((player, index) => {
-        return (
-          <ListEntry key={index}>
-            <DataEntrySpan
-              style={{
-                whiteSpace: "nowrap",
-                fontSize: "24px",
-              }}
-            >
-              <div style={{ width: "100%" }}>
-                {place}
-                {nth}
-                <div style={{ fontSize: "14px", color: "#bbb" }}>best</div>
-              </div>
-              <div style={{textAlign:"right"}}>
-                {Math.round((player.totalDeaths / player.gamesCount) * 100) /
-                  100}
-                <div style={{ fontSize: "14px", color: "#bbb" }}>
-                  deaths/game
+      <Header3>Deaths</Header3>
+      <TopList>
+        {sortedPlayers.map((player, index) => {
+          return (
+            <ListEntry key={index}>
+              <DataEntrySpan
+                style={{
+                  whiteSpace: "nowrap",
+                  fontSize: "24px",
+                }}
+              >
+                <div style={{ width: "100%" }}>
+                  {place}
+                  {nth}
+                  <div style={{ fontSize: "14px", color: "#bbb" }}>best</div>
                 </div>
-              </div>
-            </DataEntrySpan>
-          </ListEntry>
-        )
-      })}
-    </TopList>
+                <div style={{ textAlign: "right" }}>
+                  {Math.round((player.totalDeaths / player.gamesCount) * 100) /
+                    100}
+                  <div style={{ fontSize: "14px", color: "#bbb" }}>
+                    deaths/game
+                  </div>
+                </div>
+              </DataEntrySpan>
+            </ListEntry>
+          )
+        })}
+      </TopList>
     </section>
   )
 }

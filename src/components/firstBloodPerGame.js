@@ -1,5 +1,6 @@
 import { useStaticQuery, graphql } from "gatsby"
-import React from "react"
+import React, { useContext } from "react"
+import useData, { SettingsContext } from "../hooks/useData"
 import {
   Header2,
   DataEntry,
@@ -7,7 +8,7 @@ import {
   DataContainer,
 } from "./styledComponents"
 
-const FirstBloodPerGame = ({ uniqueTeams, displayTeams }) => {
+const FirstBloodPerGame = ({ displayTeams }) => {
   const data = useStaticQuery(
     graphql`
       query {
@@ -27,6 +28,7 @@ const FirstBloodPerGame = ({ uniqueTeams, displayTeams }) => {
       }
     `
   )
+  const { uniqueTeams } = useData(useContext(SettingsContext))
   const teams = []
   for (const uniqueTeam of uniqueTeams) {
     teams.push({

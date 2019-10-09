@@ -1,13 +1,13 @@
-import React from "react"
+import React, { useContext } from "react"
 import { Link, graphql } from "gatsby"
-import useData from "../hooks/useData"
+import useData, { SettingsContext } from "../hooks/useData"
 import { Header2 } from "../components/styledComponents"
 import SEO from "../components/seo"
 
 import Layout from "../components/layout"
 
 const IndexPage = () => {
-  const { uniqueTeams, uniqueTeamImages, eliminatedTeams } = useData()
+  const { uniqueTeams, uniqueTeamImages, eliminatedTeams } = useData(useContext(SettingsContext))
   const remainingTeams = uniqueTeams.filter(
     team => !eliminatedTeams.includes(team)
   )
@@ -19,18 +19,8 @@ const IndexPage = () => {
         {remainingTeams.map(uniqueTeam => (
           <Link
             key={uniqueTeam}
-            style={{
-              margin: "5px",
-              color: "#000",
-              width: "150px",
-              textDecoration: "none",
-              display: "flex",
-              alignItems: "center",
-              background: "#fff",
-              borderRadius: "10px",
-              padding: "10px 20px",
-            }}
             to={`/${uniqueTeam.toLowerCase()}/`}
+            className="team-tile"
           >
             <img
               src={uniqueTeamImages[uniqueTeam]}
@@ -53,18 +43,8 @@ const IndexPage = () => {
         {eliminatedTeams.map(uniqueTeam => (
           <Link
             key={uniqueTeam}
-            style={{
-              margin: "5px",
-              color: "#000",
-              width: "150px",
-              textDecoration: "none",
-              display: "flex",
-              alignItems: "center",
-              background: "#fff",
-              borderRadius: "10px",
-              padding: "10px 20px",
-            }}
             to={`/${uniqueTeam.toLowerCase()}/`}
+            className="team-tile"
           >
             <img
               src={uniqueTeamImages[uniqueTeam]}

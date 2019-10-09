@@ -7,7 +7,7 @@ import {
   DataEntrySpan,
 } from "./styledComponents"
 
-const TeamObjectives = ({ uniqueTeams }) => {
+const TeamObjectives = ({ displayTeams }) => {
   const data = useStaticQuery(
     graphql`
       query {
@@ -25,9 +25,9 @@ const TeamObjectives = ({ uniqueTeams }) => {
     `
   )
   const teams = []
-  for (const uniqueTeam of uniqueTeams) {
+  for (const displayTeam of displayTeams) {
     teams.push({
-      name: uniqueTeam,
+      name: displayTeam,
       towers: 0,
       inhibitors: 0,
       heralds: 0,

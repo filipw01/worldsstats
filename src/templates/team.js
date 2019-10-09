@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useContext } from "react"
 import Layout from "../components/layout"
 import TeamMostPicked from "../components/teamMostPicked"
 import TeamObjectives from "../components/teamObjectives"
@@ -6,12 +6,14 @@ import GoldDifferenceAt15 from "../components/goldDifferenceAt15"
 import AverageGameTime from "../components/averageGameTime"
 import FirstBloodPerGame from "../components/firstBloodPerGame"
 import { Link } from "gatsby"
-import useData from "../hooks/useData"
+import useData, { SettingsContext } from "../hooks/useData"
 import EliminatedBadge from "../components/eliminatedBadge"
 import SEO from "../components/seo"
 
 export default ({ path, pageContext }) => {
-  const { uniqueTeams, uniqueTeamImages, eliminatedTeams } = useData()
+  const { uniqueTeamImages, eliminatedTeams } = useData(
+    useContext(SettingsContext)
+  )
   const team = pageContext.team
   return (
     <Layout>
@@ -33,7 +35,7 @@ export default ({ path, pageContext }) => {
         {pageContext.players.map(player => (
           <Link
             key={player.name}
-            style={{ marginRight: "20px", color: "#bbb" }}
+            style={{ marginRight: "20px" }}
             to={`${path}${player.name.toLowerCase().replace(" ", "-")}/`}
           >
             {player.name}
@@ -41,11 +43,13 @@ export default ({ path, pageContext }) => {
         ))}
       </div>
       <div className="layout">
-        <FirstBloodPerGame uniqueTeams={uniqueTeams} displayTeams={[team]} />
-        <AverageGameTime uniqueTeams={uniqueTeams} displayTeams={[team]} />
-        <TeamMostPicked team={team} limit={3} />
-        <TeamObjectives uniqueTeams={[team]} />
-        <GoldDifferenceAt15 uniqueTeams={uniqueTeams} displayTeams={[team]} />
+        <FirstBloodPerGame displayTeams={[team]} />
+        <AverageGameTime displayTeams={[team]} />
+        <div>
+          <TeamMostPicked team={team} limit={3} />
+          <GoldDifferenceAt15 displayTeams={[team]} />
+        </div>
+        <TeamObjectives displayTeams={[team]} />
       </div>
       <SEO title={team} />
     </Layout>

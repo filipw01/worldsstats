@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useContext } from "react"
 import Layout from "../components/layout"
 import DamagePerMinute from "../components/damagePerMinute"
 import CreepsPerMinute from "../components/creepsPerMinute"
@@ -10,47 +10,29 @@ import SEO from "../components/seo"
 import KDA from "../components/kda"
 import { Header2 } from "../components/styledComponents"
 import { Link } from "gatsby"
-import useData from "../hooks/useData"
+import useData, { SettingsContext } from "../hooks/useData"
 
 export default ({ pageContext }) => {
-  const { uniquePlayers, eliminatedTeams } = useData()
+  const { eliminatedTeams } = useData(useContext(SettingsContext))
+
   const player = { name: pageContext.playerName, team: pageContext.teamName }
-  const uniquePlayersNames = uniquePlayers.map(player => player.name)
   return (
     <Layout>
       {eliminatedTeams.includes(player.team) ? <EliminatedBadge /> : ""}
       <Link
-        style={{ marginRight: "20px", color: "#bbb" }}
+        style={{ marginRight: "20px" }}
         to={`/${player.team.toLowerCase()}/`}
       >
         {player.team}
       </Link>
       <Header2>{player.name}</Header2>
       <div className="layout">
-        <KDA
-          uniquePlayers={uniquePlayersNames}
-          displayPlayers={[pageContext.playerName]}
-        />
-        <DeathsPerGame
-          uniquePlayers={uniquePlayersNames}
-          displayPlayers={[pageContext.playerName]}
-        />
-        <KillsPerGame
-          uniquePlayers={uniquePlayersNames}
-          displayPlayers={[pageContext.playerName]}
-        />
-        <GoldPerMinute
-          uniquePlayers={uniquePlayersNames}
-          displayPlayers={[pageContext.playerName]}
-        />
-        <CreepsPerMinute
-          uniquePlayers={uniquePlayersNames}
-          displayPlayers={[pageContext.playerName]}
-        />
-        <DamagePerMinute
-          uniquePlayers={uniquePlayersNames}
-          displayPlayers={[pageContext.playerName]}
-        />
+        <KDA displayPlayers={[pageContext.playerName]} />
+        <DeathsPerGame displayPlayers={[pageContext.playerName]} />
+        <KillsPerGame displayPlayers={[pageContext.playerName]} />
+        <GoldPerMinute displayPlayers={[pageContext.playerName]} />
+        <CreepsPerMinute displayPlayers={[pageContext.playerName]} />
+        <DamagePerMinute displayPlayers={[pageContext.playerName]} />
       </div>
       <SEO title={player.name} />
     </Layout>

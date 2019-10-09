@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: `Worlds Stats 2019`,
-    description: `Best customizable statistics from League of Legends World Championship 2019. Check out Play-In's, and the tournament as a whole.`,
+    description: `Best customizable statistics from League of Legends World Championship 2019. Check out Play-In's, Main Event and the tournament as a whole. Best LoL stats out there.`,
     author: `Filip Wachowiak`,
   },
   plugins: [

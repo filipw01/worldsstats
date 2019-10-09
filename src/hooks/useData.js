@@ -1,45 +1,50 @@
 import { useStaticQuery, graphql } from "gatsby"
+import { createContext } from "react"
 
-const useData = () => {
+const useData = ({ darkTheme, includeEliminatedTeams, includePlayIns }) => {
   const data = useStaticQuery(
     graphql`
       query {
         allDataJson {
           totalCount
-          edges {
-            node {
+          nodes {
+            name
+            players {
               name
-              players {
-                name
-              }
             }
           }
         }
       }
     `
   )
+
+  const eliminatedTeams = ["UOL", "DFM", "MMM", "ISG", "RYL", "MG", "FLA", "LK"]
   const uniqueTeams = []
-  for (const teamData of data.allDataJson.edges) {
+  for (const teamData of data.allDataJson.nodes) {
     const isNewTeam =
-      uniqueTeams.filter(team => team === teamData.node.name).length === 0
-    if (isNewTeam) {
-      uniqueTeams.push(teamData.node.name)
+      uniqueTeams.filter(team => team === teamData.name).length === 0
+    if (
+      isNewTeam &&
+      (includeEliminatedTeams || !eliminatedTeams.includes(teamData.name))
+    ) {
+      uniqueTeams.push(teamData.name)
     }
   }
 
   const uniquePlayers = []
-  for (const teamData of data.allDataJson.edges) {
-    for (const playerData of teamData.node.players) {
+  for (const teamData of data.allDataJson.nodes) {
+    for (const playerData of teamData.players) {
       const isNewPlayer =
         uniquePlayers.filter(player => player.name === playerData.name)
           .length === 0
-      if (isNewPlayer) {
-        uniquePlayers.push({ name: playerData.name, team: teamData.node.name })
+      if (
+        isNewPlayer &&
+        (includeEliminatedTeams || !eliminatedTeams.includes(teamData.name))
+      ) {
+        uniquePlayers.push({ name: playerData.name, team: teamData.name })
       }
     }
   }
-
-  const eliminatedTeams = ["UOL", "DFM", "MMM", "ISG", "RYL", "MG", "FLA", "LK"];
 
   const uniqueTeamImages = {
     CG:
@@ -67,7 +72,14 @@ const useData = () => {
     LK:
       "https://gamepedia.cursecdn.com/lolesports_gamepedia_en/thumb/3/30/Lowkey_Esportslogo_square.png/123px-Lowkey_Esportslogo_square.png?version=c5eecf6a2bd9cb1e206abcb01ed3ed5d",
   }
+
   return { uniqueTeams, uniquePlayers, uniqueTeamImages, eliminatedTeams }
 }
 
 export default useData
+
+export const SettingsContext = createContext({
+  includeEliminatedTeams: true,
+  includePlayIns: true,
+  darkTheme: true,
+})

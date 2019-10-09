@@ -5,12 +5,13 @@
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
 
-import React from "react"
+import React, { useState } from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
 
 import Header from "./header"
 import "./layout.css"
+import { SettingsContext } from "../hooks/useData"
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
@@ -22,13 +23,29 @@ const Layout = ({ children }) => {
       }
     }
   `)
+  const [includeEliminatedTeams, setIncludeEliminatedTeams] = useState(true)
+  const [includePlayIns, setIncludePlayIns] = useState(true)
+  const [darkTheme, setDarkTheme] = useState(true)
+  const toggleIncludeEliminatedTeams = () =>
+    setIncludeEliminatedTeams(!includeEliminatedTeams)
+  const toggleIncludePlayIns = () => setIncludePlayIns(!includePlayIns)
+  const toggleDarkTheme = () => setDarkTheme(!darkTheme)
 
   return (
-    <>
+    <SettingsContext.Provider
+      value={{
+        includeEliminatedTeams,
+        includePlayIns,
+        darkTheme,
+        toggleIncludeEliminatedTeams,
+        toggleIncludePlayIns,
+        toggleDarkTheme,
+      }}
+    >
       <Header siteTitle={data.site.siteMetadata.title} />
       <div
         style={{
-          margin: `0 auto`,
+          margin: `110px auto 0`,
           maxWidth: 960,
           padding: `0px 1.0875rem 1.45rem`,
           paddingTop: 0,
@@ -38,7 +55,6 @@ const Layout = ({ children }) => {
         <footer>
           © {new Date().getFullYear()}{" "}
           <a
-            style={{ color: "#bbb" }}
             href="https://github.com/filipw01"
             target="_blank"
             rel="noopener noreferrer"
@@ -47,7 +63,7 @@ const Layout = ({ children }) => {
           </a>
         </footer>
       </div>
-    </>
+    </SettingsContext.Provider>
   )
 }
 

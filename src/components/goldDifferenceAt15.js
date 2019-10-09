@@ -1,5 +1,6 @@
 import { useStaticQuery, graphql } from "gatsby"
-import React from "react"
+import React, { useContext } from "react"
+import useData, { SettingsContext } from "../hooks/useData"
 import {
   Header2,
   DataContainer,
@@ -7,7 +8,7 @@ import {
   DataEntrySpan,
 } from "./styledComponents"
 
-const GoldDifferenceAt15 = ({ uniqueTeams, displayTeams }) => {
+const GoldDifferenceAt15 = ({ displayTeams }) => {
   const data = useStaticQuery(
     graphql`
       query {
@@ -20,6 +21,7 @@ const GoldDifferenceAt15 = ({ uniqueTeams, displayTeams }) => {
       }
     `
   )
+  const { uniqueTeams } = useData(useContext(SettingsContext))
   const teams = []
   for (const uniqueTeam of uniqueTeams) {
     teams.push({
@@ -67,7 +69,8 @@ const GoldDifferenceAt15 = ({ uniqueTeams, displayTeams }) => {
             <DataEntrySpan style={{ fontSize: "24px" }}>
               <div style={{ width: "100%" }}>
                 {place}
-                {nth} <div style={{ fontSize: "14px", color: "#bbb" }}>best</div>
+                {nth}{" "}
+                <div style={{ fontSize: "14px", color: "#bbb" }}>best</div>
               </div>
 
               <div style={{ whiteSpace: "nowrap", textAlign: "center" }}>

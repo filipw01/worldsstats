@@ -7,7 +7,7 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #242424;
+  background: #282828;
 }
 article,
 aside,
@@ -243,7 +243,7 @@ h2 {
   padding-left: 0;
   padding-right: 0;
   padding-top: 0;
-  margin-bottom: 1.45rem;
+  margin-bottom: 1rem;
   color: inherit;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
@@ -608,10 +608,10 @@ section {
   max-width: 400px;
 }
 @media screen and (min-width: 900px) {
-  section{
+  section {
     margin: initial;
   }
-  .layout{
+  .layout {
     display: grid;
     grid-template-columns: 50% 50%;
   }
@@ -635,5 +635,51 @@ pre tt:after {
   }
 }
 a {
-  white-space: nowrap;
+  color: #fff;
+}
+a:hover {
+  color: #f4de33;
+}
+.hover-entry::after {
+  content: "";
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  transition: 0.2s background-color ease;
+}
+.hover-entry:hover::after {
+  background-color: #f4de33;
+}
+
+.header-link {
+  font-size: 18px;
+  text-decoration: none;
+  color: #fff;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px 15px;
+}
+.header-link:hover {
+  color: #f4de33;
+}
+.team-tile {
+  margin: 5px;
+  color: #000 !important;
+  width: 150px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px 20px;
+}
+.team-tile img {
+  transition: transform 0.3s ease;
+}
+.team-tile:hover img {
+  transform: scale(1.1);
 }

@@ -1,8 +1,9 @@
 import { useStaticQuery, graphql } from "gatsby"
-import React from "react"
+import React, { useContext } from "react"
 import { TopList, ListEntry, DataEntrySpan, Header3 } from "./styledComponents"
+import useData, { SettingsContext } from "../hooks/useData"
 
-const GoldPerMinute = ({ displayPlayers, uniquePlayers }) => {
+const GoldPerMinute = ({ displayPlayers }) => {
   const data = useStaticQuery(
     graphql`
       query {
@@ -18,8 +19,10 @@ const GoldPerMinute = ({ displayPlayers, uniquePlayers }) => {
       }
     `
   )
+  const { uniquePlayers } = useData(useContext(SettingsContext))
+  const uniquePlayersNames = uniquePlayers.map(player => player.name)
   const players = []
-  for (const uniquePlayer of uniquePlayers) {
+  for (const uniquePlayer of uniquePlayersNames) {
     players.push({
       name: uniquePlayer,
       totalGold: 0,

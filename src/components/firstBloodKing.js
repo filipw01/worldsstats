@@ -1,8 +1,9 @@
 import { useStaticQuery, graphql, Link } from "gatsby"
-import React from "react"
+import React, {useContext} from "react"
 import { TopList, ListEntry, DataEntrySpan, Header2 } from "./styledComponents"
+import useData, {SettingsContext} from "../hooks/useData"
 
-const FirstBloodKing = ({ uniquePlayers, limit }) => {
+const FirstBloodKing = ({ limit }) => {
   const data = useStaticQuery(
     graphql`
       query {
@@ -23,6 +24,7 @@ const FirstBloodKing = ({ uniquePlayers, limit }) => {
       }
     `
   )
+  const { uniquePlayers } = useData(useContext(SettingsContext))
   const players = []
   for (const uniquePlayer of uniquePlayers) {
     players.push({
@@ -66,7 +68,7 @@ const FirstBloodKing = ({ uniquePlayers, limit }) => {
           return (
             <ListEntry key={index}>
               <DataEntrySpan>
-                <div style={{ width: "100%" }}>
+                <div className="hover-entry" style={{ width: "100%" }}>
                   <Link
                     to={`/${player.team.toLowerCase()}/${player.name
                       .toLowerCase()
