@@ -7,7 +7,8 @@ import AverageGameTime from "../components/averageGameTime"
 import FirstBloodPerGame from "../components/firstBloodPerGame"
 import { Link } from "gatsby"
 import useData from "../hooks/useData"
-import EliminatedBadge from '../components/eliminatedBadge'
+import EliminatedBadge from "../components/eliminatedBadge"
+import SEO from "../components/seo"
 
 export default ({ path, pageContext }) => {
   const { uniqueTeams, uniqueTeamImages, eliminatedTeams } = useData()
@@ -46,6 +47,7 @@ export default ({ path, pageContext }) => {
         <TeamObjectives uniqueTeams={[team]} />
         <GoldDifferenceAt15 uniqueTeams={uniqueTeams} displayTeams={[team]} />
       </div>
+      <SEO title={team} />
     </Layout>
   )
 }

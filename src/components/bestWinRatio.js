@@ -67,21 +67,11 @@ const BestWinRatio = ({ limit, initialMinimumGamesPlayed }) => {
 
   return (
     <section>
-      {ascendingWinRatio?<Header2>Lowest win ratio</Header2>:<Header2>Highest win ratio</Header2>}
-      <div>
-        <button
-          onClick={() => setAscendingWinRatio(!ascendingWinRatio)}
-          style={{
-            backgroundColor: "#0E0E0E",
-            color: "#fff",
-            padding: ".25rem 1rem",
-            fontSize: ".875rem",
-            marginBottom: "10px"
-          }}
-        >
-          REVERSE
-        </button>
-      </div>
+      {ascendingWinRatio ? (
+        <Header2>Lowest win ratio</Header2>
+      ) : (
+        <Header2>Highest win ratio</Header2>
+      )}
       <label>
         Minimum games played{" "}
         <input
@@ -108,6 +98,20 @@ const BestWinRatio = ({ limit, initialMinimumGamesPlayed }) => {
           CHANGE
         </button>
       </label>
+      <div>
+        <button
+          onClick={() => setAscendingWinRatio(!ascendingWinRatio)}
+          style={{
+            backgroundColor: "#0E0E0E",
+            color: "#fff",
+            padding: ".25rem 1rem",
+            fontSize: ".875rem",
+            marginTop: "10px",
+          }}
+        >
+          {ascendingWinRatio ? "SHOW HIGHEST" : "SHOW LOWEST"}
+        </button>
+      </div>
       <TopList>
         {filteredChampions.map((champion, index) => {
           return (

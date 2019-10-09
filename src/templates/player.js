@@ -6,6 +6,7 @@ import GoldPerMinute from "../components/goldPerMinute"
 import KillsPerGame from "../components/killsPerGame"
 import DeathsPerGame from "../components/deathsPerGame"
 import EliminatedBadge from "../components/eliminatedBadge"
+import SEO from "../components/seo"
 import KDA from "../components/kda"
 import { Header2 } from "../components/styledComponents"
 import { Link } from "gatsby"
@@ -17,7 +18,7 @@ export default ({ pageContext }) => {
   const uniquePlayersNames = uniquePlayers.map(player => player.name)
   return (
     <Layout>
-      {eliminatedTeams.includes(player.team)?<EliminatedBadge/>:""}
+      {eliminatedTeams.includes(player.team) ? <EliminatedBadge /> : ""}
       <Link
         style={{ marginRight: "20px", color: "#bbb" }}
         to={`/${player.team.toLowerCase()}/`}
@@ -51,6 +52,7 @@ export default ({ pageContext }) => {
           displayPlayers={[pageContext.playerName]}
         />
       </div>
+      <SEO title={player.name} />
     </Layout>
   )
 }

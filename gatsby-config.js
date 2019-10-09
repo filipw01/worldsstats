@@ -1,8 +1,8 @@
 module.exports = {
   siteMetadata: {
-    title: `Worlds stats`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    title: `Worlds Stats 2019`,
+    description: `Best customizable statistics from League of Legends World Championship 2019. Check out Play-In's, and the tournament as a whole.`,
+    author: `Filip Wachowiak`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -18,13 +18,14 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `gatsby-starter-default`,
-        short_name: `starter`,
+        name: `Worlds Stats 2019`,
+        short_name: `Worlds Stats`,
         start_url: `/`,
-        background_color: `#663399`,
-        theme_color: `#663399`,
+        display: "standalone",
+        background_color: `#0E0E0E`,
+        theme_color: `#0E0E0E`,
         display: `minimal-ui`,
-        icon: `src/images/logo.svg`, // This path is relative to the root of the site.
+        icon: `src/images/logo.jpg`, // This path is relative to the root of the site.
       },
     },
     `gatsby-transformer-json`,

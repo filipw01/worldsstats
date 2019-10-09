@@ -1,13 +1,16 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
 import useData from "../hooks/useData"
-import {Header2} from "../components/styledComponents"
+import { Header2 } from "../components/styledComponents"
+import SEO from "../components/seo"
 
 import Layout from "../components/layout"
 
 const IndexPage = () => {
-  const { uniqueTeams, uniqueTeamImages, eliminatedTeams } = useData();
-  const remainingTeams = uniqueTeams.filter(team=>!eliminatedTeams.includes(team))
+  const { uniqueTeams, uniqueTeamImages, eliminatedTeams } = useData()
+  const remainingTeams = uniqueTeams.filter(
+    team => !eliminatedTeams.includes(team)
+  )
   return (
     <Layout>
       <div
@@ -38,12 +41,16 @@ const IndexPage = () => {
           </Link>
         ))}
       </div>
-      <Header2 style={{marginTop: "30px"}}>Eliminated</Header2>
+      <Header2 style={{ marginTop: "30px" }}>Eliminated</Header2>
       <div
-        style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", marginBottom: "20px" }}
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          marginBottom: "20px",
+        }}
       >
-        
-                {eliminatedTeams.map(uniqueTeam => (
+        {eliminatedTeams.map(uniqueTeam => (
           <Link
             key={uniqueTeam}
             style={{
@@ -68,6 +75,7 @@ const IndexPage = () => {
           </Link>
         ))}
       </div>
+      <SEO title="Teams" />
     </Layout>
   )
 }
