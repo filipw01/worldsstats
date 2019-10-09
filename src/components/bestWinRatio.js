@@ -76,6 +76,7 @@ const BestWinRatio = ({ limit, initialMinimumGamesPlayed }) => {
         Minimum games played{" "}
         <input
           ref={minimumGames}
+          min="1"
           style={{
             backgroundColor: "transparent",
             border: "none",
