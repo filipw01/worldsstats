@@ -7,7 +7,15 @@ const DeathsPerGame = ({ displayPlayers }) => {
   const data = useStaticQuery(
     graphql`
       query {
-        allDataJson {
+        allMainEventJson {
+          nodes {
+            players {
+              name
+              deaths
+            }
+          }
+        }
+        allPlayInsJson {
           nodes {
             players {
               name
@@ -18,7 +26,13 @@ const DeathsPerGame = ({ displayPlayers }) => {
       }
     `
   )
-  const { uniquePlayers } = useData(useContext(SettingsContext))
+  const { uniquePlayers} = useData(useContext(SettingsContext))
+  const { includePlayIns } = useContext(SettingsContext)
+
+  let allTeams = data.allMainEventJson.nodes
+  if (includePlayIns) {
+    allTeams = [...allTeams, ...data.allPlayInsJson.nodes]
+  }
   const uniquePlayersNames = uniquePlayers.map(player => player.name)
   const players = []
   for (const uniquePlayer of uniquePlayersNames) {
@@ -28,7 +42,7 @@ const DeathsPerGame = ({ displayPlayers }) => {
       gamesCount: 0,
     })
   }
-  for (const teamData of data.allDataJson.nodes) {
+  for (const teamData of allTeams) {
     for (const playerData of teamData.players) {
       players.forEach(player => {
         if (player.name === playerData.name) {

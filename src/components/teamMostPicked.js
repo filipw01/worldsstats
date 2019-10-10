@@ -1,12 +1,24 @@
 import { useStaticQuery, graphql } from "gatsby"
-import React from "react"
+import React, { useContext } from "react"
 import { Header2, TopList, ListEntry, DataEntrySpan } from "./styledComponents"
+import { SettingsContext } from "../hooks/useData"
 
 const TeamMostPicked = ({ team, limit }) => {
   const data = useStaticQuery(
     graphql`
       query {
-        allDataJson {
+        allMainEventJson {
+          nodes {
+            name
+            players {
+              champion {
+                id
+                image
+              }
+            }
+          }
+        }
+        allPlayInsJson {
           nodes {
             name
             players {
@@ -22,7 +34,12 @@ const TeamMostPicked = ({ team, limit }) => {
   )
 
   const champions = []
-  for (const teamData of data.allDataJson.nodes) {
+  const { includePlayIns } = useContext(SettingsContext)
+  let allTeams = data.allMainEventJson.nodes
+  if (includePlayIns) {
+    allTeams = [...allTeams, ...data.allPlayInsJson.nodes]
+  }
+  for (const teamData of allTeams) {
     for (const playerData of teamData.players) {
       const isNewChampion =
         champions.filter(champion => champion.name === playerData.champion.id)
@@ -55,7 +72,7 @@ const TeamMostPicked = ({ team, limit }) => {
     <section>
       <Header2>Most picked champions</Header2>
       <TopList>
-        {sortedChampions.map((champion) => (
+        {sortedChampions.map(champion => (
           <ListEntry key={champion.name}>
             <img
               src={champion.image}

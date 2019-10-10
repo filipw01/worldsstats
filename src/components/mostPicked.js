@@ -1,12 +1,23 @@
 import { useStaticQuery, graphql } from "gatsby"
-import React from "react"
+import React, { useContext } from "react"
 import { ListEntry, DataEntrySpan, TopList, Header2 } from "./styledComponents"
+import { SettingsContext } from "../hooks/useData"
 
 const MostPicked = ({ limit, gamesCount }) => {
   const data = useStaticQuery(
     graphql`
       query {
-        allDataJson {
+        allMainEventJson {
+          nodes {
+            players {
+              champion {
+                id
+                image
+              }
+            }
+          }
+        }
+        allPlayInsJson {
           nodes {
             players {
               champion {
@@ -19,8 +30,13 @@ const MostPicked = ({ limit, gamesCount }) => {
       }
     `
   )
+  const { includePlayIns } = useContext(SettingsContext)
+  let allTeams = data.allMainEventJson.nodes
+  if (includePlayIns) {
+    allTeams = [...allTeams, ...data.allPlayInsJson.nodes]
+  }
   const champions = []
-  for (const teamData of data.allDataJson.nodes) {
+  for (const teamData of allTeams) {
     for (const playerData of teamData.players) {
       const isNewChampion =
         champions.filter(champion => champion.name === playerData.champion.id)

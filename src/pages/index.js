@@ -10,7 +10,8 @@ import FirstBloodKing from "../components/firstBloodKing"
 import BestWinRatio from "../components/bestWinRatio"
 
 const IndexPage = ({ data }) => {
-  const gamesCount = data.allDataJson.totalCount / 2
+  const gamesCount =
+    data.allMainEventJson.totalCount + data.allPlayInsJson.totalCount / 2
   return (
     <Layout>
       <div>
@@ -36,7 +37,7 @@ const IndexPage = ({ data }) => {
       </div>
       <div className="layout">
         <BestWinRatio limit={5} initialMinimumGamesPlayed={5} />
-        <FirstBloodKing limit={5} />
+        <FirstBloodKing limit={5} gamesCount={gamesCount} />
         <MostBanned limit={5} gamesCount={gamesCount} />
         <MostPicked limit={5} gamesCount={gamesCount} />
         <MostPurchasedItems limit={5} gamesCount={gamesCount} />
@@ -48,7 +49,10 @@ const IndexPage = ({ data }) => {
 
 export const query = graphql`
   query {
-    allDataJson {
+    allMainEventJson {
+      totalCount
+    }
+    allPlayInsJson {
       totalCount
     }
   }

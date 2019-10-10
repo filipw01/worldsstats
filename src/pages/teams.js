@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import { Link, graphql } from "gatsby"
+import { Link } from "gatsby"
 import useData, { SettingsContext } from "../hooks/useData"
 import { Header2 } from "../components/styledComponents"
 import SEO from "../components/seo"
@@ -59,18 +59,5 @@ const IndexPage = () => {
     </Layout>
   )
 }
-
-export const query = graphql`
-  query {
-    allDataJson {
-      totalCount
-      edges {
-        node {
-          name
-        }
-      }
-    }
-  }
-`
 
 export default IndexPage

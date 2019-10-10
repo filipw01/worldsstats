@@ -1,6 +1,7 @@
 import { useStaticQuery, graphql } from "gatsby"
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
 import { ListEntry, DataEntrySpan, TopList, Header2 } from "./styledComponents"
+import { SettingsContext } from "../hooks/useData"
 
 const MostPurchasedItems = ({ limit, gamesCount }) => {
   const [includeBoots, setIncludeBoots] = useState(false)
@@ -14,21 +15,36 @@ const MostPurchasedItems = ({ limit, gamesCount }) => {
             name
           }
         }
-        allDataJson {
-            nodes {
-              players {
-                items {
-                  id
-                  image
-                }
+        allMainEventJson {
+          nodes {
+            players {
+              items {
+                id
+                image
+              }
+            }
+          }
+        }
+        allPlayInsJson {
+          nodes {
+            players {
+              items {
+                id
+                image
+              }
             }
           }
         }
       }
     `
   )
+  const { includePlayIns } = useContext(SettingsContext)
+  let allTeams = data.allMainEventJson.nodes
+  if (includePlayIns) {
+    allTeams = [...allTeams, ...data.allPlayInsJson.nodes]
+  }
   const items = []
-  for (const teamData of data.allDataJson.nodes) {
+  for (const teamData of allTeams) {
     for (const playerData of teamData.players) {
       for (const itemData of playerData.items) {
         const isNewItem =
@@ -138,7 +154,7 @@ const MostPurchasedItems = ({ limit, gamesCount }) => {
   return (
     <section>
       <Header2>Most purchased items</Header2>
-      <label style={{marginTop: "20px", display: "block"}}>
+      <label style={{ marginTop: "20px", display: "block" }}>
         Include boots{" "}
         <input
           type="checkbox"

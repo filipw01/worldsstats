@@ -12,7 +12,20 @@ const FirstBloodPerGame = ({ displayTeams }) => {
   const data = useStaticQuery(
     graphql`
       query {
-        allDataJson {
+        allMainEventJson {
+          nodes {
+            players {
+              champion {
+                id
+              }
+            }
+            firstBlood {
+              id
+            }
+            name
+          }
+        }
+        allPlayInsJson {
           nodes {
             players {
               champion {
@@ -28,7 +41,13 @@ const FirstBloodPerGame = ({ displayTeams }) => {
       }
     `
   )
-  const { uniqueTeams } = useData(useContext(SettingsContext))
+  const { uniqueTeams} = useData(useContext(SettingsContext))
+  const { includePlayIns } = useContext(SettingsContext)
+
+  let allTeams = data.allMainEventJson.nodes
+  if (includePlayIns) {
+    allTeams = [...allTeams, ...data.allPlayInsJson.nodes]
+  }
   const teams = []
   for (const uniqueTeam of uniqueTeams) {
     teams.push({
@@ -37,7 +56,7 @@ const FirstBloodPerGame = ({ displayTeams }) => {
       numberOfGames: 0,
     })
   }
-  for (const teamData of data.allDataJson.nodes) {
+  for (const teamData of allTeams) {
     const isAllyFirstBlood =
       teamData.players.filter(
         player => player.champion.id === teamData.firstBlood.id
@@ -50,7 +69,7 @@ const FirstBloodPerGame = ({ displayTeams }) => {
       })
     }
   }
-  for (const teamData of data.allDataJson.nodes) {
+  for (const teamData of allTeams) {
     teams.forEach(team => {
       if (team.name === teamData.name) {
         team.numberOfGames++

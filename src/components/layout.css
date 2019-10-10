@@ -661,7 +661,7 @@ a:hover {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 10px 15px;
+  padding: 10px;
 }
 .header-link:hover {
   color: #f4de33;

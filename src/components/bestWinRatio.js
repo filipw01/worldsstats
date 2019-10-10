@@ -1,5 +1,6 @@
 import { useStaticQuery, graphql } from "gatsby"
-import React, { useState, useRef } from "react"
+import React, { useState, useRef, useContext } from "react"
+import { SettingsContext } from "../hooks/useData"
 import {
   TopList,
   ListEntry,
@@ -11,7 +12,18 @@ const BestWinRatio = ({ limit, initialMinimumGamesPlayed }) => {
   const data = useStaticQuery(
     graphql`
       query {
-        allDataJson {
+        allMainEventJson {
+          nodes {
+            win
+            players {
+              champion {
+                id
+                image
+              }
+            }
+          }
+        }
+        allPlayInsJson {
           nodes {
             win
             players {
@@ -25,6 +37,11 @@ const BestWinRatio = ({ limit, initialMinimumGamesPlayed }) => {
       }
     `
   )
+  const { includePlayIns } = useContext(SettingsContext)
+  let allTeams = data.allMainEventJson.nodes
+  if (includePlayIns) {
+    allTeams = [...allTeams, ...data.allPlayInsJson.nodes]
+  }
   const [minimumGamesPlayed, setMinimumGamesPlayed] = useState(
     initialMinimumGamesPlayed
   )
@@ -33,7 +50,7 @@ const BestWinRatio = ({ limit, initialMinimumGamesPlayed }) => {
   const setMinimumGamesPlayedAdapter = e =>
     setMinimumGamesPlayed(e.target.value)
   const champions = []
-  for (const teamData of data.allDataJson.nodes) {
+  for (const teamData of allTeams) {
     for (const playerData of teamData.players) {
       const isNewChampion =
         champions.filter(champion => champion.name === playerData.champion.id)

@@ -1,12 +1,21 @@
 import { useStaticQuery, graphql } from "gatsby"
-import React from "react"
+import React, { useContext } from "react"
 import { ListEntry, DataEntrySpan, TopList, Header2 } from "./styledComponents"
+import { SettingsContext } from "../hooks/useData"
 
 const MostBanned = ({ limit, gamesCount }) => {
   const data = useStaticQuery(
     graphql`
       query {
-        allDataJson {
+        allMainEventJson {
+          nodes {
+            bans {
+              id
+              image
+            }
+          }
+        }
+        allPlayInsJson {
           nodes {
             bans {
               id
@@ -17,8 +26,13 @@ const MostBanned = ({ limit, gamesCount }) => {
       }
     `
   )
+  const { includePlayIns } = useContext(SettingsContext)
+  let allTeams = data.allMainEventJson.nodes
+  if (includePlayIns) {
+    allTeams = [...allTeams, ...data.allPlayInsJson.nodes]
+  }
   const bans = []
-  for (const teamData of data.allDataJson.nodes) {
+  for (const teamData of allTeams) {
     for (const teamBan of teamData.bans) {
       const isNewBan = bans.filter(ban => ban.name === teamBan.id).length === 0
       if (isNewBan) {

@@ -25,6 +25,7 @@ const Header = ({ siteTitle }) => {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
+          position: "relative",
         }}
       >
         <h1 style={{ margin: 0 }}>
@@ -91,8 +92,8 @@ const Header = ({ siteTitle }) => {
             Settings
           </button>
         </div>
+        {settingsOpen ? <SettingsTooltip /> : ""}
       </div>
-      {settingsOpen ? <SettingsTooltip /> : ""}
     </header>
   )
 }

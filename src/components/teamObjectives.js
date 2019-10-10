@@ -1,17 +1,28 @@
 import { useStaticQuery, graphql } from "gatsby"
-import React from "react"
+import React, { useContext } from "react"
 import {
   Header2,
   DataContainer,
   DataEntry,
   DataEntrySpan,
 } from "./styledComponents"
+import { SettingsContext } from "../hooks/useData"
 
 const TeamObjectives = ({ displayTeams }) => {
   const data = useStaticQuery(
     graphql`
       query {
-        allDataJson {
+        allMainEventJson {
+          nodes {
+            name
+            towers
+            inhibitors
+            herald
+            dragons
+            barons
+          }
+        }
+        allPlayInsJson {
           nodes {
             name
             towers
@@ -25,6 +36,11 @@ const TeamObjectives = ({ displayTeams }) => {
     `
   )
   const teams = []
+  const { includePlayIns } = useContext(SettingsContext)
+  let allTeams = data.allMainEventJson.nodes
+  if (includePlayIns) {
+    allTeams = [...allTeams, ...data.allPlayInsJson.nodes]
+  }
   for (const displayTeam of displayTeams) {
     teams.push({
       name: displayTeam,
@@ -36,7 +52,7 @@ const TeamObjectives = ({ displayTeams }) => {
       gamesCount: 0,
     })
   }
-  for (const teamData of data.allDataJson.nodes) {
+  for (const teamData of allTeams) {
     teams.forEach(team => {
       if (team.name === teamData.name) {
         team.towers += Number(teamData.towers)
@@ -57,7 +73,13 @@ const TeamObjectives = ({ displayTeams }) => {
           <DataEntry>
             <DataEntrySpan>
               <div style={{ width: "100%", fontSize: "24px" }}>Towers</div>
-              <div style={{ whiteSpace: "nowrap", fontSize: "24px", textAlign: "center" }}>
+              <div
+                style={{
+                  whiteSpace: "nowrap",
+                  fontSize: "24px",
+                  textAlign: "center",
+                }}
+              >
                 {Math.round((team.towers / team.gamesCount) * 100) / 100}
                 <div style={{ fontSize: "14px", color: "#bbb" }}>per game</div>
               </div>
@@ -66,7 +88,13 @@ const TeamObjectives = ({ displayTeams }) => {
           <DataEntry>
             <DataEntrySpan>
               <div style={{ width: "100%", fontSize: "24px" }}>Inhibitors</div>
-              <div style={{ whiteSpace: "nowrap", fontSize: "24px", textAlign: "center" }}>
+              <div
+                style={{
+                  whiteSpace: "nowrap",
+                  fontSize: "24px",
+                  textAlign: "center",
+                }}
+              >
                 {Math.round((team.inhibitors / team.gamesCount) * 100) / 100}{" "}
                 <div style={{ fontSize: "14px", color: "#bbb" }}>per game</div>
               </div>
@@ -75,7 +103,13 @@ const TeamObjectives = ({ displayTeams }) => {
           <DataEntry>
             <DataEntrySpan>
               <div style={{ width: "100%", fontSize: "24px" }}>Heralds</div>
-              <div style={{ whiteSpace: "nowrap", fontSize: "24px", textAlign: "center" }}>
+              <div
+                style={{
+                  whiteSpace: "nowrap",
+                  fontSize: "24px",
+                  textAlign: "center",
+                }}
+              >
                 {Math.round((team.heralds / team.gamesCount) * 100) / 100}
                 <div style={{ fontSize: "14px", color: "#bbb" }}>per game</div>
               </div>
@@ -84,7 +118,13 @@ const TeamObjectives = ({ displayTeams }) => {
           <DataEntry>
             <DataEntrySpan>
               <div style={{ width: "100%", fontSize: "24px" }}>Dragons</div>
-              <div style={{ whiteSpace: "nowrap", fontSize: "24px", textAlign: "center" }}>
+              <div
+                style={{
+                  whiteSpace: "nowrap",
+                  fontSize: "24px",
+                  textAlign: "center",
+                }}
+              >
                 {Math.round((team.dragons / team.gamesCount) * 100) / 100}
                 <div style={{ fontSize: "14px", color: "#bbb" }}>per game</div>
               </div>
@@ -93,7 +133,13 @@ const TeamObjectives = ({ displayTeams }) => {
           <DataEntry>
             <DataEntrySpan>
               <div style={{ width: "100%", fontSize: "24px" }}>Barons</div>
-              <div style={{ whiteSpace: "nowrap", fontSize: "24px", textAlign: "center" }}>
+              <div
+                style={{
+                  whiteSpace: "nowrap",
+                  fontSize: "24px",
+                  textAlign: "center",
+                }}
+              >
                 {Math.round((team.barons / team.gamesCount) * 100) / 100}
                 <div style={{ fontSize: "14px", color: "#bbb" }}>per game</div>
               </div>

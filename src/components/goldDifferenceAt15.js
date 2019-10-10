@@ -12,7 +12,13 @@ const GoldDifferenceAt15 = ({ displayTeams }) => {
   const data = useStaticQuery(
     graphql`
       query {
-        allDataJson {
+        allMainEventJson {
+          nodes {
+            name
+            goldDifferenceAt15
+          }
+        }
+        allPlayInsJson {
           nodes {
             name
             goldDifferenceAt15
@@ -22,6 +28,11 @@ const GoldDifferenceAt15 = ({ displayTeams }) => {
     `
   )
   const { uniqueTeams } = useData(useContext(SettingsContext))
+  const { includePlayIns } = useContext(SettingsContext)
+  let allTeams = data.allMainEventJson.nodes
+  if (includePlayIns) {
+    allTeams = [...allTeams, ...data.allPlayInsJson.nodes]
+  }
   const teams = []
   for (const uniqueTeam of uniqueTeams) {
     teams.push({
@@ -30,7 +41,7 @@ const GoldDifferenceAt15 = ({ displayTeams }) => {
       gamesCount: 0,
     })
   }
-  for (const teamData of data.allDataJson.nodes) {
+  for (const teamData of allTeams) {
     teams.forEach(team => {
       if (team.name === teamData.name) {
         team.goldDifferenceAt15 += Number(teamData.goldDifferenceAt15)

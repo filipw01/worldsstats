@@ -14,43 +14,51 @@ exports.createPages = ({ graphql, actions }) => {
   return graphql(
     `
       query {
-        allDataJson {
-          edges {
-            node {
+        allMainEventJson {
+            nodes {
               name
               players {
                 name
               }
             }
+        }
+        allPlayInsJson {
+            nodes {
+              name
+              players {
+                name
+              }
           }
         }
       }
     `,
     { limit: 1000 }
-  ).then(result => {
-    if (result.errors) {
-      throw result.errors
+  ).then(({ data, errors }) => {
+    if (errors) {
+      throw errors
     }
+
+    const allTeams = [...data.allMainEventJson.nodes, ...data.allPlayInsJson.nodes]
 
     // Create blog post pages.
     const uniqueTeams = []
-    for (const teamData of result.data.allDataJson.edges) {
+    for (const teamData of allTeams) {
       const isNewTeam =
-        uniqueTeams.filter(team => team === teamData.node.name).length === 0
+        uniqueTeams.filter(team => team === teamData.name).length === 0
       if (isNewTeam) {
-        uniqueTeams.push(teamData.node.name)
+        uniqueTeams.push(teamData.name)
       }
     }
     const uniquePlayers = []
-    for (const teamData of result.data.allDataJson.edges) {
-      for (const playerData of teamData.node.players) {
+    for (const teamData of allTeams) {
+      for (const playerData of teamData.players) {
         const isNewPlayer =
-          uniquePlayers.filter(player => player.name === playerData.name).length ===
-          0
+          uniquePlayers.filter(player => player.name === playerData.name)
+            .length === 0
         if (isNewPlayer) {
           uniquePlayers.push({
             name: playerData.name,
-            team: teamData.node.name,
+            team: teamData.name,
           })
         }
       }
@@ -64,7 +72,7 @@ exports.createPages = ({ graphql, actions }) => {
         component: teamTemplate,
         context: {
           players,
-          team: uniqueTeam
+          team: uniqueTeam,
         },
       })
     })
@@ -76,7 +84,7 @@ exports.createPages = ({ graphql, actions }) => {
         component: playerTemplate,
         context: {
           playerName: uniquePlayer.name,
-          teamName: uniquePlayer.team
+          teamName: uniquePlayer.team,
           // Add optional context data to be inserted
           // as props into the page component..
           //

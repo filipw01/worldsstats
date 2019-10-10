@@ -5,7 +5,16 @@ const useData = ({ darkTheme, includeEliminatedTeams, includePlayIns }) => {
   const data = useStaticQuery(
     graphql`
       query {
-        allDataJson {
+        allMainEventJson{
+          totalCount
+          nodes {
+            name
+            players {
+              name
+            }
+          }
+        }
+        allPlayInsJson {
           totalCount
           nodes {
             name
@@ -17,10 +26,14 @@ const useData = ({ darkTheme, includeEliminatedTeams, includePlayIns }) => {
       }
     `
   )
+  let gamesToCompute = data.allMainEventJson.nodes
+  if (includePlayIns) {
+    gamesToCompute = [...gamesToCompute, ...data.allPlayInsJson.nodes]
+  }
 
   const eliminatedTeams = ["UOL", "DFM", "MMM", "ISG", "RYL", "MG", "FLA", "LK"]
   const uniqueTeams = []
-  for (const teamData of data.allDataJson.nodes) {
+  for (const teamData of gamesToCompute) {
     const isNewTeam =
       uniqueTeams.filter(team => team === teamData.name).length === 0
     if (
@@ -32,7 +45,7 @@ const useData = ({ darkTheme, includeEliminatedTeams, includePlayIns }) => {
   }
 
   const uniquePlayers = []
-  for (const teamData of data.allDataJson.nodes) {
+  for (const teamData of gamesToCompute) {
     for (const playerData of teamData.players) {
       const isNewPlayer =
         uniquePlayers.filter(player => player.name === playerData.name)
