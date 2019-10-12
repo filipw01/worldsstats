@@ -88,7 +88,8 @@ const GameParticipation = ({ limit }) => {
     .slice(0, limit)
   return (
     <section>
-      <Header2>Picks and bans combined</Header2>
+      <Header2>Game Participation</Header2>
+      <p>Combined champions picks and bans</p>
       <TopList>
         {sortedChampions.map((champion, index) => {
           return (

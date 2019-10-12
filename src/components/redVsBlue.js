@@ -41,7 +41,8 @@ const RedVsBlue = () => {
 
   return (
     <section>
-      <Header2>Wins by map side</Header2>
+      <Header2>Win Ratio: Blue vs Red </Header2>
+      <p>Percentage of games won by blue and red team</p>
       <div
         style={{
           display: "flex",
@@ -49,7 +50,7 @@ const RedVsBlue = () => {
           justifyContent: "center",
           margin: "30px 0",
           textAlign: "center",
-          height: "300px",
+          height: "250px",
         }}
       >
         <div style={{ marginRight: "20px" }}>
@@ -57,7 +58,7 @@ const RedVsBlue = () => {
             style={{
               width: "70px",
               height: `${blueWinsPercentage * 3}px`,
-              backgroundColor: "blue",
+              backgroundColor: "#2747e8",
               marginBottom: "10px",
             }}
           ></div>
@@ -68,7 +69,7 @@ const RedVsBlue = () => {
             style={{
               width: "70px",
               height: `${redWinsPercentage * 3}px`,
-              backgroundColor: "red",
+              backgroundColor: "#cb2124",
               marginBottom: "10px",
             }}
           ></div>

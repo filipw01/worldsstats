@@ -65,6 +65,7 @@ const MostPicked = ({ limit }) => {
   return (
     <section>
       <Header2>Most picked champions</Header2>
+      <p>Desired champions, that made it through the ban phase</p>
       <TopList>
         {sortedChampions.map((champion, index) => {
           return (

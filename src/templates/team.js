@@ -51,7 +51,7 @@ export default ({ path, pageContext }) => {
         </div>
         <TeamObjectives displayTeams={[team]} />
       </div>
-      <SEO title={team} />
+      <SEO title={`${team} Statistics`} />
     </Layout>
   )
 }

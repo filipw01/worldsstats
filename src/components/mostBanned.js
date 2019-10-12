@@ -59,6 +59,7 @@ const MostBanned = ({ limit }) => {
   return (
     <section>
       <Header2>Most banned champions</Header2>
+      <p>Champions that both teams are afraid to face</p>
       <TopList>
         {sortedBans.map((ban, index) => {
           return (

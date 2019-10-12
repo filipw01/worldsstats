@@ -82,6 +82,7 @@ const FirstBloodKing = ({ limit }) => {
   return (
     <section>
       <Header2>First blood kings</Header2>
+      <p>Players with the most first bloods in the tournament</p>
       <TopList>
         {sortedPlayers.map((player, index) => {
           return (

@@ -155,6 +155,7 @@ const MostPurchasedItems = ({ limit }) => {
   return (
     <section>
       <Header2>Most purchased items</Header2>
+      <p>Full items, that players like to buy the most</p>
       <label style={{ marginTop: "20px", display: "block" }}>
         Include boots{" "}
         <input

@@ -5,10 +5,8 @@ const SettingsTooltip = () => {
   const {
     includeEliminatedTeams,
     includePlayIns,
-    darkTheme,
     toggleIncludeEliminatedTeams,
     toggleIncludePlayIns,
-    toggleDarkTheme,
   } = useContext(SettingsContext)
 
   return (

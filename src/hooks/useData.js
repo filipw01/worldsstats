@@ -1,7 +1,7 @@
 import { useStaticQuery, graphql } from "gatsby"
 import { createContext } from "react"
 
-const useData = ({ darkTheme, includeEliminatedTeams, includePlayIns }) => {
+const useData = ({ includeEliminatedTeams, includePlayIns }) => {
   const data = useStaticQuery(
     graphql`
       query {
@@ -118,5 +118,4 @@ export default useData
 export const SettingsContext = createContext({
   includeEliminatedTeams: true,
   includePlayIns: true,
-  darkTheme: true,
 })

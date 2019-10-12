@@ -16,15 +16,7 @@ const IndexPage = () => {
         <h1 style={{ marginBottom: ".5em" }}>Worlds Stats 2019</h1>
         <div style={{ lineHeight: "1.33" }}>
           <p style={{ marginBottom: ".75em" }}>
-            Check out{" "}
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://lol.gamepedia.com/2019_Season_World_Championship"
-            >
-              League of Legends World Championship 2019
-            </a>{" "}
-            statistics
+            Check out League of Legends World Championship 2019 statistics
           </p>
           <p style={{ marginBottom: ".75em" }}>
             Customize displayed data. Exclude Play-In stage and teams that have
@@ -42,7 +34,7 @@ const IndexPage = () => {
         <RedVsBlue />
         <MostPurchasedItems limit={5} />
       </div>
-      <SEO title="Home" />
+      <SEO title="LoL Worlds Statistics" />
     </Layout>
   )
 }

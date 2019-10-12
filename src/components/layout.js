@@ -25,21 +25,17 @@ const Layout = ({ children }) => {
   `)
   const [includeEliminatedTeams, setIncludeEliminatedTeams] = useState(true)
   const [includePlayIns, setIncludePlayIns] = useState(true)
-  const [darkTheme, setDarkTheme] = useState(true)
   const toggleIncludeEliminatedTeams = () =>
     setIncludeEliminatedTeams(!includeEliminatedTeams)
   const toggleIncludePlayIns = () => setIncludePlayIns(!includePlayIns)
-  const toggleDarkTheme = () => setDarkTheme(!darkTheme)
 
   return (
     <SettingsContext.Provider
       value={{
         includeEliminatedTeams,
         includePlayIns,
-        darkTheme,
         toggleIncludeEliminatedTeams,
         toggleIncludePlayIns,
-        toggleDarkTheme,
       }}
     >
       <Header siteTitle={data.site.siteMetadata.title} />
@@ -52,15 +48,34 @@ const Layout = ({ children }) => {
         }}
       >
         <main>{children}</main>
-        <footer>
-          © {new Date().getFullYear()}{" "}
-          <a
-            href="https://github.com/filipw01"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Filip Wachowiak
-          </a>
+        <footer
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-end",
+          }}
+        >
+          <div>
+            © {new Date().getFullYear()}{" "}
+            <a
+              href="https://github.com/filipw01"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Filip Wachowiak
+            </a>
+          </div>
+          <div>
+            <h3>Feedback</h3>
+            <p>
+              Are you satisfied with the page?
+              <br />
+              Do you want to suggest something to improve?
+              <br />
+              Mail me at{" "}
+              <a href="mailto:wachowiakf@gmail.com">wachowiakf@gmail.com</a>
+            </p>
+          </div>
         </footer>
       </div>
     </SettingsContext.Provider>

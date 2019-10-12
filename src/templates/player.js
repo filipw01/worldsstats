@@ -34,7 +34,7 @@ export default ({ pageContext }) => {
         <CreepsPerMinute displayPlayers={[pageContext.playerName]} />
         <DamagePerMinute displayPlayers={[pageContext.playerName]} />
       </div>
-      <SEO title={player.name} />
+      <SEO title={`${player.name} Statistics`} />
     </Layout>
   )
 }
