@@ -40,10 +40,6 @@ const SettingsTooltip = () => {
           onChange={toggleIncludePlayIns}
         />
       </SettingOption>
-      <SettingOption>
-        Use dark theme{" "}
-        <input type="checkbox" checked={darkTheme} onChange={toggleDarkTheme} />
-      </SettingOption>
     </div>
   )
 }

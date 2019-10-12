@@ -3,7 +3,7 @@ import React, { useContext } from "react"
 import { ListEntry, DataEntrySpan, TopList, Header2 } from "./styledComponents"
 import { SettingsContext } from "../hooks/useData"
 
-const MostBanned = ({ limit, gamesCount }) => {
+const MostBanned = ({ limit }) => {
   const data = useStaticQuery(
     graphql`
       query {
@@ -31,6 +31,7 @@ const MostBanned = ({ limit, gamesCount }) => {
   if (includePlayIns) {
     allTeams = [...allTeams, ...data.allPlayInsJson.nodes]
   }
+  const gamesCount = allTeams.length/2;
   const bans = []
   for (const teamData of allTeams) {
     for (const teamBan of teamData.bans) {

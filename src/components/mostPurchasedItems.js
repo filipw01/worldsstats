@@ -3,7 +3,7 @@ import React, { useState, useContext } from "react"
 import { ListEntry, DataEntrySpan, TopList, Header2 } from "./styledComponents"
 import { SettingsContext } from "../hooks/useData"
 
-const MostPurchasedItems = ({ limit, gamesCount }) => {
+const MostPurchasedItems = ({ limit }) => {
   const [includeBoots, setIncludeBoots] = useState(false)
 
   const data = useStaticQuery(
@@ -43,6 +43,7 @@ const MostPurchasedItems = ({ limit, gamesCount }) => {
   if (includePlayIns) {
     allTeams = [...allTeams, ...data.allPlayInsJson.nodes]
   }
+  const gamesCount = allTeams.length/2;
   const items = []
   for (const teamData of allTeams) {
     for (const playerData of teamData.players) {

@@ -3,12 +3,16 @@ import React, { useContext } from "react"
 import { ListEntry, DataEntrySpan, TopList, Header2 } from "./styledComponents"
 import { SettingsContext } from "../hooks/useData"
 
-const MostPicked = ({ limit }) => {
+const GameParticipation = ({ limit }) => {
   const data = useStaticQuery(
     graphql`
       query {
         allMainEventJson {
           nodes {
+            bans {
+              id
+              image
+            }
             players {
               champion {
                 id
@@ -19,6 +23,10 @@ const MostPicked = ({ limit }) => {
         }
         allPlayInsJson {
           nodes {
+            bans {
+              id
+              image
+            }
             players {
               champion {
                 id
@@ -56,6 +64,22 @@ const MostPicked = ({ limit }) => {
         })
       }
     }
+    for (const teamBan of teamData.bans) {
+      const isNewChampion = champions.filter(champion => champion.name === teamBan.id).length === 0
+      if (isNewChampion) {
+        champions.push({
+          name: teamBan.id,
+          image: teamBan.image,
+          count: 1,
+        })
+      } else {
+        champions.forEach(champion => {
+          if (champion.name === teamBan.id) {
+            champion.count++
+          }
+        })
+      }
+    }
   }
   const sortedChampions = champions
     .sort((a, b) => {
@@ -64,7 +88,7 @@ const MostPicked = ({ limit }) => {
     .slice(0, limit)
   return (
     <section>
-      <Header2>Most picked champions</Header2>
+      <Header2>Picks and bans combined</Header2>
       <TopList>
         {sortedChampions.map((champion, index) => {
           return (
@@ -78,7 +102,7 @@ const MostPicked = ({ limit }) => {
                 <div style={{ width: "100%" }}>
                   <div style={{ fontSize: "18px" }}>{champion.name}</div>
                   <div style={{ fontSize: "14px", color: "#bbb" }}>
-                    {champion.count} picks
+                    {champion.count} picks + bans
                   </div>
                 </div>
                 <div
@@ -99,4 +123,4 @@ const MostPicked = ({ limit }) => {
   )
 }
 
-export default MostPicked
+export default GameParticipation

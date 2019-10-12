@@ -1,6 +1,4 @@
 import React from "react"
-import { graphql } from "gatsby"
-
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import MostPicked from "../components/mostPicked"
@@ -8,10 +6,10 @@ import MostBanned from "../components/mostBanned"
 import MostPurchasedItems from "../components/mostPurchasedItems"
 import FirstBloodKing from "../components/firstBloodKing"
 import BestWinRatio from "../components/bestWinRatio"
+import GameParticipation from "../components/gameParticipation"
+import RedVsBlue from "../components/redVsBlue"
 
-const IndexPage = ({ data }) => {
-  const gamesCount =
-    data.allMainEventJson.totalCount + data.allPlayInsJson.totalCount / 2
+const IndexPage = () => {
   return (
     <Layout>
       <div>
@@ -37,25 +35,16 @@ const IndexPage = ({ data }) => {
       </div>
       <div className="layout">
         <BestWinRatio limit={5} initialMinimumGamesPlayed={5} />
-        <FirstBloodKing limit={5} gamesCount={gamesCount} />
-        <MostBanned limit={5} gamesCount={gamesCount} />
-        <MostPicked limit={5} gamesCount={gamesCount} />
-        <MostPurchasedItems limit={5} gamesCount={gamesCount} />
+        <FirstBloodKing limit={5} />
+        <GameParticipation limit={5} />
+        <MostBanned limit={5} />
+        <MostPicked limit={5} />
+        <RedVsBlue />
+        <MostPurchasedItems limit={5} />
       </div>
       <SEO title="Home" />
     </Layout>
   )
 }
-
-export const query = graphql`
-  query {
-    allMainEventJson {
-      totalCount
-    }
-    allPlayInsJson {
-      totalCount
-    }
-  }
-`
 
 export default IndexPage
