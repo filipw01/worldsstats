@@ -66,6 +66,11 @@ const Layout = ({ children }) => {
             </a>
           </div>
           <div>
+            Worlds Stats was created under Riot Games' "Legal
+            Jibber Jabber" policy using assets owned by Riot Games. Riot Games
+            does not endorse or sponsor this project.
+          </div>
+          <div>
             <h3>Feedback</h3>
             <p>
               Are you satisfied with the page?
