@@ -48,6 +48,17 @@ const Layout = ({ children }) => {
         }}
       >
         <main>{children}</main>
+        <div>
+          <h3>Feedback</h3>
+          <p>
+            Are you satisfied with the page?
+            <br />
+            Do you want to suggest something to improve?
+            <br />
+            Mail me at{" "}
+            <a href="mailto:wachowiakf@gmail.com">wachowiakf@gmail.com</a>
+          </p>
+        </div>
         <footer
           style={{
             display: "flex",
@@ -65,21 +76,10 @@ const Layout = ({ children }) => {
               Filip Wachowiak
             </a>
           </div>
-          <div>
-            Worlds Stats was created under Riot Games' "Legal
-            Jibber Jabber" policy using assets owned by Riot Games. Riot Games
-            does not endorse or sponsor this project.
-          </div>
-          <div>
-            <h3>Feedback</h3>
-            <p>
-              Are you satisfied with the page?
-              <br />
-              Do you want to suggest something to improve?
-              <br />
-              Mail me at{" "}
-              <a href="mailto:wachowiakf@gmail.com">wachowiakf@gmail.com</a>
-            </p>
+          <div style={{ marginLeft: "20px" }}>
+            Worlds Stats was created under Riot Games' "Legal Jibber Jabber"
+            policy using assets owned by Riot Games. Riot Games does not endorse
+            or sponsor this project.
           </div>
         </footer>
       </div>

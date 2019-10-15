@@ -81,7 +81,7 @@ const BestWinRatio = ({ limit, initialMinimumGamesPlayed }) => {
     )
   } else {
     sortedChampions = champions.sort(
-      (a, b) => b.wins / b.count - a.wins / a.count || b.count - a.count || a.name - b.name
+      (a, b) => b.wins / b.count - a.wins / a.count || b.count - a.count || b.name - a.name
     )
   }
   const filteredChampions = sortedChampions
