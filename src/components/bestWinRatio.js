@@ -77,11 +77,11 @@ const BestWinRatio = ({ limit, initialMinimumGamesPlayed }) => {
   let sortedChampions
   if (ascendingWinRatio) {
     sortedChampions = champions.sort(
-      (a, b) => a.wins / a.count - b.wins / b.count || a.count - b.count
+      (a, b) => a.wins / a.count - b.wins / b.count || a.count - b.count || a.name - b.name
     )
   } else {
     sortedChampions = champions.sort(
-      (a, b) => b.wins / b.count - a.wins / a.count || b.count - a.count
+      (a, b) => b.wins / b.count - a.wins / a.count || b.count - a.count || a.name - b.name
     )
   }
   const filteredChampions = sortedChampions
@@ -124,9 +124,9 @@ const BestWinRatio = ({ limit, initialMinimumGamesPlayed }) => {
         </BaseButton>
       </div>
       <TopList>
-        {filteredChampions.map((champion, index) => {
+        {filteredChampions.map((champion) => {
           return (
-            <ListEntry key={index}>
+            <ListEntry key={champion.name}>
               <img
                 src={champion.image}
                 style={{ height: "50px", verticalAlign: "middle" }}

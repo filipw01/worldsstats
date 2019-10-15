@@ -133,7 +133,7 @@ const MostPurchasedItems = ({ limit }) => {
   ]
   const sortedItems = items
     .sort((a, b) => {
-      return b.count - a.count
+      return b.count - a.count || b.id - a.id
     })
     .filter(
       item =>
