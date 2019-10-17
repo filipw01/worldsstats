@@ -31,7 +31,7 @@ const useData = ({ includeEliminatedTeams, includePlayIns }) => {
     gamesToCompute = [...gamesToCompute, ...data.allPlayInsJson.nodes]
   }
 
-  const eliminatedTeams = ["UOL", "DFM", "MMM", "ISG", "RYL", "MG", "FLA", "LK"]
+  const eliminatedTeams = ["UOL", "DFM", "MMM", "ISG", "RYL", "MG", "FLA", "LK", "GAM", "JT"]
   const uniqueTeams = []
   for (const teamData of gamesToCompute) {
     const isNewTeam =
