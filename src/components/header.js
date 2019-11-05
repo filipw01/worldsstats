@@ -1,15 +1,17 @@
 import { Link } from "gatsby"
 import PropTypes from "prop-types"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import SettingsTooltip from "../components/settingsTooltip"
 
 const Header = ({ siteTitle }) => {
   const [settingsOpen, setSettingsOpen] = useState(false)
-  window.onclick = () => {
-    if (settingsOpen) {
-      setSettingsOpen(false)
+  useEffect(() => {
+    window.onclick = () => {
+      if (settingsOpen) {
+        setSettingsOpen(false)
+      }
     }
-  }
+  })
   return (
     <header
       style={{

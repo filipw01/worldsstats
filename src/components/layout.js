@@ -5,7 +5,7 @@
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
 
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
 
@@ -23,16 +23,18 @@ const Layout = ({ children }) => {
       }
     }
   `)
-  const initialValueEliminatedTeams =
-    window.localStorage.getItem("includeEliminatedTeams") === "true"
-      ? true
-      : false
-  const initialValuePlayIns =
-    window.localStorage.getItem("includePlayIns") === "true" ? true : false
-  const [includeEliminatedTeams, setIncludeEliminatedTeams] = useState(
-    initialValueEliminatedTeams
-  )
-  const [includePlayIns, setIncludePlayIns] = useState(initialValuePlayIns)
+  const [includeEliminatedTeams, setIncludeEliminatedTeams] = useState(true)
+  const [includePlayIns, setIncludePlayIns] = useState(false)
+  useEffect(() => {
+    setIncludeEliminatedTeams(
+      window.localStorage.getItem("includeEliminatedTeams") === "true"
+        ? true
+        : false
+    )
+    setIncludePlayIns(
+      window.localStorage.getItem("includePlayIns") === "true" ? true : false
+    )
+  })
   const toggleIncludeEliminatedTeams = e => {
     e.stopPropagation()
     window.localStorage.setItem(
