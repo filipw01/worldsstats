@@ -80,7 +80,7 @@ const FirstBloodPerGame = ({ displayTeams }) => {
   const sortedTeams = teams
     .sort(
       (a, b) =>
-        b.firstBloods - a.firstBloods || a.numberOfGames - b.numberOfGames
+        b.firstBloods/b.numberOfGames - a.firstBloods/a.numberOfGames || a.firstBloods - b.firstBloods
     )
     .filter((team, index) => {
       if (displayTeams.includes(team.name)) {

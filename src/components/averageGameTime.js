@@ -89,7 +89,7 @@ const AverageGameTime = ({ displayTeams }) => {
                 <div style={{ width: "100%" }}>
                   {place}
                   {nth}{" "}
-                  <div style={{ fontSize: "14px", color: "#bbb" }}>best</div>
+                  <div style={{ fontSize: "14px", color: "#bbb" }}>fastest</div>
                 </div>
                 <div style={{ whiteSpace: "nowrap" }}>
                   <div>

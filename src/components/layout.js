@@ -23,11 +23,29 @@ const Layout = ({ children }) => {
       }
     }
   `)
-  const [includeEliminatedTeams, setIncludeEliminatedTeams] = useState(true)
-  const [includePlayIns, setIncludePlayIns] = useState(true)
-  const toggleIncludeEliminatedTeams = () =>
+  const initialValueEliminatedTeams =
+    window.localStorage.getItem("includeEliminatedTeams") === "true"
+      ? true
+      : false
+  const initialValuePlayIns =
+    window.localStorage.getItem("includePlayIns") === "true" ? true : false
+  const [includeEliminatedTeams, setIncludeEliminatedTeams] = useState(
+    initialValueEliminatedTeams
+  )
+  const [includePlayIns, setIncludePlayIns] = useState(initialValuePlayIns)
+  const toggleIncludeEliminatedTeams = e => {
+    e.stopPropagation()
+    window.localStorage.setItem(
+      "includeEliminatedTeams",
+      !includeEliminatedTeams
+    )
     setIncludeEliminatedTeams(!includeEliminatedTeams)
-  const toggleIncludePlayIns = () => setIncludePlayIns(!includePlayIns)
+  }
+  const toggleIncludePlayIns = e => {
+    e.stopPropagation()
+    window.localStorage.setItem("includePlayIns", !includePlayIns)
+    setIncludePlayIns(!includePlayIns)
+  }
 
   return (
     <SettingsContext.Provider

@@ -5,6 +5,11 @@ import SettingsTooltip from "../components/settingsTooltip"
 
 const Header = ({ siteTitle }) => {
   const [settingsOpen, setSettingsOpen] = useState(false)
+  window.onclick = () => {
+    if (settingsOpen) {
+      setSettingsOpen(false)
+    }
+  }
   return (
     <header
       style={{
@@ -87,7 +92,7 @@ const Header = ({ siteTitle }) => {
           </Link>
           <button
             className="header-link"
-            onClick={() => setSettingsOpen(!settingsOpen)}
+            onClick={e => e.stopPropagation() || setSettingsOpen(!settingsOpen)}
           >
             Settings
           </button>
