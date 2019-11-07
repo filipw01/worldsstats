@@ -607,7 +607,7 @@ section {
   margin: 0 auto;
   max-width: 400px;
 }
-@media screen and (min-width: 900px) {
+@media screen and (min-width: 800px) {
   section {
     margin: initial;
   }

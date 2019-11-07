@@ -3,6 +3,7 @@ import Layout from "../components/layout"
 import TeamMostPicked from "../components/teamMostPicked"
 import TeamObjectives from "../components/teamObjectives"
 import GoldDifferenceAt15 from "../components/goldDifferenceAt15"
+import DamageDistribution from "../components/damageDistribution"
 import AverageGameTime from "../components/averageGameTime"
 import FirstBloodPerGame from "../components/firstBloodPerGame"
 import { Link } from "gatsby"
@@ -18,31 +19,35 @@ export default ({ path, pageContext }) => {
   return (
     <Layout>
       {eliminatedTeams.includes(team) ? <EliminatedBadge /> : ""}
-      <div
-        style={{
-          display: "inline-block",
-          marginBottom: "20px",
-          background: "#fff",
-          borderRadius: "10px",
-          padding: "10px 20px",
-          zIndex: "-2",
-          position: "relative",
-        }}
-      >
-        <img src={uniqueTeamImages[team]} alt="" />
-      </div>
-      <div>
-        {pageContext.players.map(player => (
-          <Link
-            key={player.name}
-            style={{ marginRight: "20px" }}
-            to={`${path}${player.name.toLowerCase().replace(" ", "-")}/`}
-          >
-            {player.name}
-          </Link>
-        ))}
-      </div>
+
       <div className="layout">
+        <div>
+          <div
+            style={{
+              display: "inline-block",
+              marginBottom: "20px",
+              background: "#fff",
+              borderRadius: "10px",
+              padding: "10px 20px",
+              zIndex: "-2",
+              position: "relative",
+            }}
+          >
+            <img src={uniqueTeamImages[team]} alt="" />
+          </div>
+          <div>
+            {pageContext.players.map(player => (
+              <Link
+                key={player.name}
+                style={{ marginRight: "20px" }}
+                to={`${path}${player.name.toLowerCase().replace(" ", "-")}/`}
+              >
+                {player.name}
+              </Link>
+            ))}
+          </div>
+        </div>
+        <DamageDistribution team={team} />
         <FirstBloodPerGame displayTeams={[team]} />
         <AverageGameTime displayTeams={[team]} />
         <div>

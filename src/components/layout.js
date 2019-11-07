@@ -34,7 +34,7 @@ const Layout = ({ children }) => {
     setIncludePlayIns(
       window.localStorage.getItem("includePlayIns") === "true" ? true : false
     )
-  })
+  }, [])
   const toggleIncludeEliminatedTeams = e => {
     e.stopPropagation()
     window.localStorage.setItem(
