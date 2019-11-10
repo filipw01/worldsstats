@@ -14,8 +14,7 @@ const IndexPage = () => {
   return (
     <Layout>
       <h1>Select the team</h1>
-      <Header2 style={{ marginTop: "30px" }}>Still in the game</Header2>
-      <p>Each of those teams dream about the 1st place</p>
+      <Header2 style={{ marginTop: "30px" }}>Winner of the tournament</Header2>
       <div
         style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
       >
@@ -34,8 +33,8 @@ const IndexPage = () => {
           </Link>
         ))}
       </div>
-      <Header2 style={{ marginTop: "30px" }}>Eliminated</Header2>
-      <p>Those teams are not participating in the championship anymore</p>
+      <Header2 style={{ marginTop: "30px" }}>Other teams</Header2>
+      <p>Those teams failed to win this years championship</p>
       <div
         style={{
           display: "flex",
